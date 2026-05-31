@@ -176,16 +176,9 @@ export async function POST(req) {
       const arrayBuffer = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
       
-      // Polyfill DOMMatrix globally for environments lacking it (like Node/Serverless)
-      if (typeof global.DOMMatrix === 'undefined') {
-        global.DOMMatrix = class DOMMatrix {};
-      }
-      
-      const { PDFParse } = require('pdf-parse');
-      const parser = new PDFParse({ data: buffer });
-      const pdfData = await parser.getText();
+      const pdf = require('pdf-parse');
+      const pdfData = await pdf(buffer);
       proposalText = pdfData.text;
-      await parser.destroy(); // Always destroy parser to free up memory
 
     } else {
 
