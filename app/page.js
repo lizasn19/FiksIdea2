@@ -30,72 +30,7 @@ import WTPChart from '../components/WTPChart';
 import GanttChartGenerator from '../components/GanttChartGenerator';
 import SDGsPillarMapper from '../components/SDGsPillarMapper';
 
-// Pre-defined templates for instant demo evaluation
-const TEMPLATES = {
-  riceguard: {
-    title: "🌾 RiceGuard: Pendeteksi Gabah IoT",
-    desc: "Inovasi alat deteksi kualitas gabah padi berbasis Internet of Things untuk mencegah tengkulak mempermainkan harga beli dari petani lokal.",
-    text: `PROPOSAL PERENCANAAN USAHA FIKSI 2026
-Judul: RiceGuard - IoT Rice Quality Sensor & Mobile Platform
-Kategori: Rumpun Digital, Game, Media & Kewirausahaan Sosial
-Pilar Utama: Ekonomi Digital & Ketahanan Pangan
-
-1. Purwarupa Produk (MVP)
-Kami telah merancang sensor kelembaban dan densitas gabah menggunakan mikrokontroler ESP32. Visualisasi MVP berupa screenshot sirkuit fisik sensor (terlampir di Bab II) dan mockup antarmuka web monitoring (dibuat menggunakan Figma) untuk memantau kadar air gabah secara real-time. Logika alur kerja sensor dijelaskan lewat flowchart sistem monitoring sederhana di Bab III, mencakup masukan data kadar air hingga alarm pengeringan menyala. Link demo screencast rekaman layar sistem berdurasi 1 menit 30 detik sudah kami cantumkan di proposal lewat link Google Drive (akses publik dibuka).
-
-2. Validasi Pasar
-Pengujian purwarupa dilakukan langsung terhadap 20 petani gabah di Koperasi Desa Makmur. Hasil survei kepuasan dicantumkan dalam bentuk pie chart (80% menyatakan alat mudah dipahami). Siklus perbaikan mencakup penyesuaian tata letak tombol kalibrasi yang sebelumnya terlalu kecil berdasarkan masukan para petani lansia. Analisis WTP juga dilakukan lewat kuesioner harga jual sewa alat, di mana mayoritas memilih batas harga sewa Rp 35.000 per bulan.
-
-3. Kelayakan Usaha
-Aliran pendapatan direncanakan dari dua sumber: sewa bulanan perangkat keras IoT dan langganan dashboard premium untuk analisis tahunan hasil panen. Biaya operasional bulanan dihitung matang mencakup sewa server cloud database Rp 150.000, kuota internet modem tim Rp 100.000, dan biaya penyusutan laptop Rp 100.000 per bulan. Grafik BEP bulanan memproyeksikan balik modal pada penjualan/sewa ke-15 unit dengan proyeksi cashflow naik bertahap seiring musim panen raya selama 6 bulan.
-
-4. Rencana Implementasi & Tema FIKSI
-Jadwal kerja mingguan disusun rapi (Sabtu-Minggu untuk koding, sore hari sepulang sekolah untuk promosi) agar tidak mengganggu KBM sekolah. Rantai pasok aman dengan melampirkan screenshot chat pemesanan komponen ESP32 dari distributor resmi. Dokumentasi sinergi mitra lapangan mencakup foto-foto tim sedang rapat bersama pengurus Koperasi Pertanian dan Ibu-Ibu PKK desa. Mitigasi risiko mencakup penyediaan server cadangan jika server utama bermasalah. Bisnis ini mendukung pilar Ekonomi Digital dan SDG 9 (Industri, Inovasi, & Infrastruktur).`
-  },
-  ecoshell: {
-    title: "🦐 EcoShell: Upcycling Cangkang Udang",
-    desc: "Usaha pembuatan kemasan bioplastik ramah lingkungan (upcycling) dengan memanfaatkan limbah cangkang udang dari tambak pesisir desa.",
-    text: `PROPOSAL PERENCANAAN USAHA FIKSI 2026
-Judul: EcoShell - Bioplastik Organik dari Upcycling Cangkang Udang
-Kategori: Kategori Perencanaan Usaha - Kewirausahaan Sosial
-Pilar Utama: Ekonomi Hijau (Upcycling) & SDGs
-
-1. Purwarupa Produk (MVP)
-Visualisasi nyata purwarupa kemasan bioplastik EcoShell dilampirkan berupa foto sampel fisik lembaran plastik hasil uji lab mandiri di sekolah dan draf desain storyboard kemasan luar. Alur proses produksi dari pembersihan kitin cangkang udang, pencampuran gliserol, hingga pembentukan plastik digambarkan lewat bagan alir operasional produksi di Bab II. Link video demo berdurasi 2 menit memperlihatkan daya elastisitas plastik EcoShell terhadap beban 1 kg di Google Drive.
-
-2. Validasi Pasar
-Pengujian bioplastik EcoShell dilakukan langsung ke 25 pengrajin keripik lokal sebagai calon pengguna kemasan organik. Hasil survei kepuasan 88% menyukai ketahanan plastik. Tabel feedback loop melampirkan komparasi sebelum perbaikan (bioplastik berbau amis udang tajam) menjadi sesudah perbaikan (menambahkan minyak esensial pandan wangi untuk menghilangkan bau). Analisis WTP menetapkan harga jual kemasan Rp 2.500 per lembar berdasarkan kesanggupan bayar pengusaha UMKM.
-
-3. Kelayakan Usaha
-Aliran pendapatan didapatkan dari penjualan retail lembaran kemasan dan jasa kustomisasi desain kemasan brand lokal. Rincian pengeluaran operasional mencakup transportasi pengambilan cangkang udang Rp 100.000/bulan, internet pemasaran Rp 50.000, dan penyusutan kompor/blender ekstraksi Rp 80.000/bulan. Perhitungan BEP Unit tercapai pada penjualan 400 lembar per bulan dengan grafik proyeksi arus kas operasional naik bertahap 6 bulan ke depan secara logis.
-
-4. Rencana Implementasi & Tema
-Job desk tim terbagi jelas antara bagian ekstraksi bahan dan bagian desain/marketing. Kami menyertakan bukti foto tim saat membersihkan limbah cangkang bersama pengumpul tambak udang lokal serta foto rapat bersama kelompok wanita tani. Draf konten visual promosi Instagram disertakan di Bab IV. Ide ini secara kuat mendukung pilar Ekonomi Hijau (Upcycling cangkang udang) dan SDG 12 (Konsumsi dan Produksi yang Bertanggung Jawab) serta SDG 14 (Menjaga Ekosistem Laut).`
-  },
-  garudasaga: {
-    title: "🎮 Garuda Saga: Game Edukasi Sejarah",
-    desc: "Proyek game petualangan edukasi sejarah lokal yang ditujukan untuk meningkatkan minat belajar siswa sekolah dasar lewat platform Android.",
-    text: `PROPOSAL PERENCANAAN USAHA FIKSI 2026
-Judul: Garuda Saga - Game Petualangan Edukasi Sejarah Nusantara
-Kategori: Rumpun Digital, Game, Media
-Pilar Utama: Ekonomi Kreatif & Ekonomi Digital
-
-1. Purwarupa Produk (MVP)
-Kami membuat game petualangan bertema sejarah Kerajaan Majapahit. Visualisasi MVP di proposal berupa coretan kasar gambar karakter di kertas buram dan logo rancangan game buatan tangan. Untuk alur kerja, kami membuat flowchart sistem sederhana berisi 3 kotak saja: Mulai -> Klik Beli Aset -> Selesai Game. Video demo belum sempat direkam secara real-time di sistem, melainkan berupa cuplikan slide PowerPoint statis yang diberi latar musik latar belakang di GDrive (akses link masih terkunci/minta izin).
-
-2. Validasi Pasar
-Kami menguji konsep game ini kepada 5 orang teman sebangku dan keluarga terdekat kami di rumah yang semuanya menyatakan bahwa game ini sangat menyenangkan dan pasti laku terjual. Masukan perbaikan belum kami lakukan karena kami menganggap aplikasi game kami sudah langsung sempurna dan tidak memiliki bug sejak awal pembuatan. Analisis harga jual kami tetapkan Rp 150.000 sekali unduh di Play Store secara asal-asalan tanpa melakukan riset harga pasar.
-
-3. Kelayakan Usaha
-Satu-satunya aliran pendapatan bisnis kami adalah mengandalkan iklan Google AdSense di dalam game yang nilainya kecil dan tidak pasti. Biaya operasional bulanan kami klaim Rp 0 karena kami menggunakan wifi gratis sekolah dan memakai laptop pribadi kami sendiri tanpa menghitung penyusutan alat atau sewa server. Target balik modal atau BEP kami proyeksikan langsung untung Rp 20 juta pada bulan kedua setelah rilis tanpa perhitungan biaya iklan Google Ads yang logis di lapangan.
-
-4. Rencana Implementasi & Tema
-Pembagian tugas tim tidak jelas karena semua hal teknis maupun non-teknis dikerjakan langsung oleh ketua kelompok saja. Kami belum menghubungi mitra lokal atau komunitas mana pun karena merasa belum memerlukan kerja sama luar. Promosi hanya mengandalkan dari mulut ke mulut saja. Rencana masa depan bisnis kami terhenti tepat setelah kompetisi final FIKSI ini selesai.`
-  }
-};
-
 export default function Home() {
-  const [proposalText, setProposalText] = useState('');
   const [pdfFile, setPdfFile] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -104,21 +39,9 @@ export default function Home() {
   const [alertMsg, setAlertMsg] = useState('');
   const [showGuide, setShowGuide] = useState(false);
 
-  // Load default template on mount
-  useEffect(() => {
-    setProposalText(TEMPLATES.riceguard.text);
-  }, []);
-
-  const handleSelectTemplate = (key) => {
-    setPdfFile(null); // Reset uploaded file when template is selected
-    setProposalText(TEMPLATES[key].text);
-    setAlertMsg(`Template "${TEMPLATES[key].title}" dimuat. Silakan klik "Analisis Proposal" di bawah.`);
-    setTimeout(() => setAlertMsg(''), 5000);
-  };
-
   const handleEvaluate = async () => {
-    if (!pdfFile && (!proposalText || proposalText.trim().length < 10)) {
-      alert('Silakan unggah file PDF proposal Anda atau pilih salah satu template contoh di atas.');
+    if (!pdfFile) {
+      alert('Silakan unggah file PDF proposal Anda terlebih dahulu.');
       return;
     }
 
@@ -126,29 +49,14 @@ export default function Home() {
     setEvaluation(null);
 
     try {
-      let response;
-      if (pdfFile) {
-        // Evaluate using uploaded PDF file (multipart/form-data)
-        const formData = new FormData();
-        formData.append('file', pdfFile);
+      // Evaluate using uploaded PDF file (multipart/form-data)
+      const formData = new FormData();
+      formData.append('file', pdfFile);
 
-        response = await fetch('/api/evaluate', {
-          method: 'POST',
-          body: formData
-          // Note: browser automatically sets Content-Type header with the multipart boundary
-        });
-      } else {
-        // Evaluate using JSON template text
-        response = await fetch('/api/evaluate', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            proposalText
-          })
-        });
-      }
+      const response = await fetch('/api/evaluate', {
+        method: 'POST',
+        body: formData
+      });
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -182,27 +90,6 @@ export default function Home() {
     "5. Rencana Operasional",
     "6. Ringkasan & HAKI"
   ];
-
-  const templateThemes = {
-    riceguard: {
-      color: 'var(--accent-blue)',
-      glow: 'var(--accent-blue-glow)',
-      icon: '🌾',
-      badge: 'Ekonomi Digital'
-    },
-    ecoshell: {
-      color: 'var(--accent-green)',
-      glow: 'var(--accent-green-glow)',
-      icon: '🦐',
-      badge: 'Ekonomi Hijau'
-    },
-    garudasaga: {
-      color: '#8b5cf6',
-      glow: 'rgba(139, 92, 246, 0.08)',
-      icon: '🎮',
-      badge: 'Ekonomi Kreatif'
-    }
-  };
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
@@ -389,7 +276,7 @@ export default function Home() {
       {/* Main Wizard Content Area */}
       <main style={{ flex: 1, padding: '0 20px 30px 20px', maxWidth: '1100px', margin: '0 auto', width: '100%' }}>
         
-        {/* STEP 1: Input & Template Selection */}
+        {/* STEP 1: Input & PDF Upload */}
         {currentStep === 1 && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
             
@@ -422,63 +309,8 @@ export default function Home() {
                 </h2>
                 <p style={{ fontSize: '0.85rem', color: 'var(--text-primary)', marginTop: '6px', lineHeight: '1.5', opacity: 0.85 }}>
                   Selamat datang di <b>FIKS-Idea Reviewer</b>. Siap menyulap ide wirausaha hebatmu menjadi proposal matang siap juara tingkat nasional? 
-                  Ayo mulai analisis proposalmu atau gunakan contoh template di bawah untuk melihat bimbingan AI interaktif kami!
+                  Silakan unggah file PDF proposal tim Anda pada area di bawah untuk mendapatkan analisis bimbingan AI interaktif secara instan.
                 </p>
-              </div>
-            </div>
-
-            {/* Template Card Selection */}
-            <div className="glass-panel" style={{ padding: '24px', background: 'rgba(255, 255, 255, 0.9)' }}>
-              <span style={{ fontSize: '0.9rem', fontWeight: '800', color: 'var(--accent-gold)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                💡 Langkah 1: Pilih Contoh Ide Bisnis SMA (Template)
-              </span>
-              <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', marginTop: '6px', fontWeight: '500' }}>
-                Klik salah satu kategori contoh di bawah untuk langsung memuat draf proposal kustom yang telah diisi.
-              </p>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px', marginTop: '16px' }}>
-                {Object.keys(TEMPLATES).map(key => {
-                  const theme = templateThemes[key];
-                  return (
-                    <button 
-                      key={key} 
-                      onClick={() => handleSelectTemplate(key)}
-                      style={{
-                        background: 'rgba(255, 255, 255, 0.9)',
-                        border: `2px solid ${theme.color}`,
-                        borderRadius: '16px',
-                        padding: '20px 18px',
-                        textAlign: 'left',
-                        cursor: 'pointer',
-                        transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: '8px',
-                        boxShadow: `0 6px 15px ${theme.glow}`
-                      }}
-                      onMouseEnter={e => {
-                        e.currentTarget.style.transform = 'translateY(-3.5px)';
-                        e.currentTarget.style.boxShadow = `0 12px 25px ${theme.glow}`;
-                      }}
-                      onMouseLeave={e => {
-                        e.currentTarget.style.transform = 'translateY(0)';
-                        e.currentTarget.style.boxShadow = `0 6px 15px ${theme.glow}`;
-                      }}
-                    >
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                          <span style={{ fontSize: '1.4rem' }}>{theme.icon}</span>
-                          <span style={{ fontSize: '0.9rem', fontWeight: '800', color: 'var(--text-primary)' }}>
-                            {TEMPLATES[key].title.replace(/🌾 |🦐 |🎮 /, '').split(': ')[1] || TEMPLATES[key].title.replace(/🌾 |🦐 |🎮 /, '')}
-                          </span>
-                        </div>
-                      </div>
-                      <span style={{ fontSize: '0.72rem', backgroundColor: theme.glow, color: theme.color, padding: '3px 8px', borderRadius: '20px', fontWeight: 'bold', alignSelf: 'flex-start' }}>
-                        {theme.badge}
-                      </span>
-                      <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', lineHeight: '1.4', marginTop: '4px' }}>{TEMPLATES[key].desc}</span>
-                    </button>
-                  );
-                })}
               </div>
             </div>
 
@@ -490,16 +322,6 @@ export default function Home() {
                 </span>
                 <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 'bold', backgroundColor: 'var(--bg-tertiary)', padding: '4px 10px', borderRadius: '20px' }}>Format File Wajib: PDF (.pdf)</span>
               </div>
-
-              {/* Status Banner when template is active */}
-              {!pdfFile && proposalText && (
-                <div style={{ padding: '14px 18px', backgroundColor: 'rgba(245, 158, 11, 0.05)', border: '1px solid rgba(245, 158, 11, 0.18)', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: 'var(--accent-gold)', boxShadow: '0 0 8px var(--accent-gold)' }}></div>
-                  <span style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>
-                    <b>💡 Mode Demo Aktif:</b> Menggunakan teks draf template di atas. Anda bisa mengunggah file PDF karya tim Anda sendiri untuk dianalisis oleh AI.
-                  </span>
-                </div>
-              )}
 
               {/* Drag and Drop Zone */}
               <div 
