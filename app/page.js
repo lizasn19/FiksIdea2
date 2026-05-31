@@ -102,6 +102,7 @@ export default function Home() {
   const [evaluation, setEvaluation] = useState(null);
   const [currentStep, setCurrentStep] = useState(1); // Steps: 1 (Input), 2 (MVP), 3 (Pasar), 4 (Finansial), 5 (Implementasi), 6 (Ringkasan)
   const [alertMsg, setAlertMsg] = useState('');
+  const [showGuide, setShowGuide] = useState(false);
 
   // Load default template on mount
   useEffect(() => {
@@ -225,10 +226,89 @@ export default function Home() {
             <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 'bold', letterSpacing: '0.5px' }}>Deadline Lomba FIKSI</span>
             <p style={{ fontSize: '0.85rem', fontWeight: '800', color: 'var(--accent-gold)' }}>⏳ 10 Juli 2026 (Submit Online)</p>
           </div>
+          <button 
+            onClick={() => setShowGuide(!showGuide)} 
+            className="tab-button" 
+            style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '8px', 
+              padding: '10px 14px', 
+              borderRadius: '10px', 
+              border: '1.5px solid var(--accent-gold)', 
+              backgroundColor: showGuide ? 'var(--accent-gold-glow)' : 'transparent', 
+              color: 'var(--text-primary)', 
+              transition: 'all 0.2s ease', 
+              fontWeight: '800',
+              boxShadow: '0 4px 10px rgba(245, 158, 11, 0.05)'
+            }}
+          >
+            <Info size={16} color="var(--accent-gold)" />
+            <span style={{ fontSize: '0.8rem' }}>💡 Panduan & Tips Juara</span>
+          </button>
         </div>
       </header>
 
+      {/* Guidelines Panel Accordion */}
+      {showGuide && (
+        <div className="glass-panel" style={{ margin: '0 20px 20px 20px', padding: '24px', borderRadius: '16px', borderLeft: '6px solid var(--accent-gold)', background: 'linear-gradient(to right, rgba(245, 158, 11, 0.05), #ffffff)', animation: 'fadeIn 0.3s ease' }}>
+          <h3 style={{ fontSize: '1.1rem', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '800' }}>
+            💡 Panduan Sukses & Kriteria Penilaian FIKSI 2026
+          </h3>
+          <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '4px', lineHeight: '1.5' }}>
+            Ikuti petunjuk dan strategi rahasia berikut agar proposal wirausaha tim Anda mendapatkan penilaian tinggi dari juri nasional!
+          </p>
+          
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px', marginTop: '16px' }}>
+            
+            {/* Column 1: Syarat Berkas */}
+            <div style={{ backgroundColor: 'white', padding: '16px', borderRadius: '12px', border: '1px solid var(--border-color)', boxShadow: '0 4px 10px rgba(0,0,0,0.01)' }}>
+              <span style={{ fontSize: '0.8rem', fontWeight: '800', color: 'var(--accent-blue)', display: 'block', marginBottom: '6px' }}>
+                📋 Persyaratan Berkas Proposal
+              </span>
+              <ul style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', paddingLeft: '16px', lineHeight: '1.6' }}>
+                <li>Wajib berformat <b>PDF (.pdf)</b> dengan ukuran maksimal 10MB.</li>
+                <li>Dokumen harus berupa <b>teks asli</b> (bukan hasil scan/gambar) agar AI kami dapat membaca dan mengekstrak isinya.</li>
+                <li>Bab terpenting yang wajib ada: Desain Purwarupa (MVP), Hasil Uji Validasi Pasar, Model Kelayakan Keuangan, dan Rencana Kerja Tim.</li>
+              </ul>
+            </div>
 
+            {/* Column 2: Bobot Penilaian */}
+            <div style={{ backgroundColor: 'white', padding: '16px', borderRadius: '12px', border: '1px solid var(--border-color)', boxShadow: '0 4px 10px rgba(0,0,0,0.01)' }}>
+              <span style={{ fontSize: '0.8rem', fontWeight: '800', color: 'var(--accent-green)', display: 'block', marginBottom: '6px' }}>
+                📊 Bobot Penilaian Juri Nasional
+              </span>
+              <ul style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', paddingLeft: '16px', lineHeight: '1.6' }}>
+                <li><b>Purwarupa MVP (30%)</b>: Desain UI/UX digital riil, flowchart navigasi sistem, dan link demo video.</li>
+                <li><b>Validasi Pasar (25%)</b>: Pengujian minimal ke 15-30 responden luar, feedback tabel Sebelum vs Sesudah, dan riset harga WTP.</li>
+                <li><b>Kelayakan Usaha (25%)</b>: Rincian biaya server, internet, penyusutan laptop, perhitungan BEP, dan arus kas 6 bulan.</li>
+                <li><b>Rencana & Tema (20%)</b>: Pembagian tugas (Job Desk) mingguan, rantai pasok logis, promosi visual, dan keselarasan SDGs PBB.</li>
+              </ul>
+            </div>
+
+            {/* Column 3: Trik Rahasia Juara */}
+            <div style={{ backgroundColor: 'white', padding: '16px', borderRadius: '12px', border: '1px solid var(--border-color)', boxShadow: '0 4px 10px rgba(0,0,0,0.01)' }}>
+              <span style={{ fontSize: '0.8rem', fontWeight: '800', color: 'var(--accent-gold)', display: 'block', marginBottom: '6px' }}>
+                🌟 Trik Rahasia Menembus Final
+              </span>
+              <ul style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', paddingLeft: '16px', lineHeight: '1.6' }}>
+                <li><b>Jangan Klaim Rp0</b>: Menghitung biaya internet/laptop sebagai Rp0 karena milik pribadi adalah kesalahan juri. Juri menyukai transparansi finansial profesional.</li>
+                <li><b>Buktikan Kemitraan</b>: Selalu lampirkan screenshot chat dengan penyuplai bahan baku atau foto rapat bersama mitra lapangan sebagai bukti komitmen bisnis nyata.</li>
+                <li><b>Fokus SDGs</b>: Hubungkan bisnis Anda dengan minimal 1 dari 17 pilar SDGs PBB secara tertulis dan visual di halaman awal.</li>
+              </ul>
+            </div>
+
+          </div>
+
+          <button 
+            className="glow-button" 
+            onClick={() => setShowGuide(false)} 
+            style={{ marginTop: '20px', padding: '8px 20px', fontSize: '0.8rem', background: 'linear-gradient(135deg, var(--accent-gold) 0%, #ea580c 100%)', boxShadow: '0 4px 12px rgba(245, 158, 11, 0.2)' }}
+          >
+            Tutup Panduan
+          </button>
+        </div>
+      )}
 
       {/* Alert Notification */}
       {alertMsg && (
