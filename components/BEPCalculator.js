@@ -1,35 +1,18 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useMemo } from 'react';
 
-export default function BEPCalculator({ initialData }) {
-  // Fixed costs states
-  const [serverCost, setServerCost] = useState(150000);
-  const [internetCost, setInternetCost] = useState(100000);
-  const [softwareCost, setSoftwareCost] = useState(50000);
-  const [depreciationCost, setDepreciationCost] = useState(100000);
+export default function BEPCalculator({ initialData, reviewData }) {
+  // Read-only values from extracted data (with default fallbacks)
+  const serverCost = initialData?.serverCost ?? 0;
+  const internetCost = initialData?.internetCost ?? 0;
+  const softwareCost = initialData?.softwareCost ?? 0;
+  const depreciationCost = initialData?.depreciationCost ?? 0;
 
-  // Variable costs states
-  const [rawMaterials, setRawMaterials] = useState(10000);
-  const [transportCost, setTransportCost] = useState(5000);
-  const [marketingCost, setMarketingCost] = useState(5000);
+  const rawMaterials = initialData?.rawMaterials ?? 0;
+  const transportCost = initialData?.transportCost ?? 0;
+  const marketingCost = initialData?.marketingCost ?? 0;
 
-  // Selling price & quantity
-  const [sellingPrice, setSellingPrice] = useState(50000);
-  const [prodQty, setProdQty] = useState(50);
-
-  // Synchronise with AI extracted data if available
-  useEffect(() => {
-    if (initialData) {
-      setServerCost(initialData.serverCost ?? 0);
-      setInternetCost(initialData.internetCost ?? 0);
-      setSoftwareCost(initialData.softwareCost ?? 0);
-      setDepreciationCost(initialData.depreciationCost ?? 0);
-      setRawMaterials(initialData.rawMaterials ?? 0);
-      setTransportCost(initialData.transportCost ?? 0);
-      setMarketingCost(initialData.marketingCost ?? 0);
-      setSellingPrice(initialData.sellingPrice ?? 0);
-      setProdQty(initialData.prodQty ?? 1);
-    }
-  }, [initialData]);
+  const sellingPrice = initialData?.sellingPrice ?? 0;
+  const prodQty = initialData?.prodQty ?? 1;
 
   // Calculations
   const calculations = useMemo(() => {
@@ -65,7 +48,7 @@ export default function BEPCalculator({ initialData }) {
   // Generate SVG graph data points
   const graphPoints = useMemo(() => {
     const maxQty = Math.max(calculations.bepUnit * 2, prodQty * 1.5, 20);
-    const step = Math.ceil(maxQty / 10);
+    const step = Math.ceil(maxQty / 10) || 1;
     const data = [];
     
     for (let q = 0; q <= maxQty; q += step) {
@@ -92,7 +75,7 @@ export default function BEPCalculator({ initialData }) {
   const svgDimensions = { width: 450, height: 250, padding: 40 };
   const svgPaths = useMemo(() => {
     const { data, maxQty } = graphPoints;
-    if (data.length === 0) return { fixedPath: '', costPath: '', revPath: '', bepCoords: null };
+    if (data.length === 0) return { fixedPath: '', costPath: '', revPath: '', bepCoords: null, prodCoords: null };
 
     // Max values for scaling
     const maxCostRev = Math.max(...data.map(d => Math.max(d.totalCost, d.revenue)), 1000);
@@ -132,7 +115,7 @@ export default function BEPCalculator({ initialData }) {
       costY: getY(calculations.totalCost)
     };
 
-    return { fixedPath, costPath, revPath, bepCoords, prodCoords, getX, getY, maxCostRev };
+    return { fixedPath, costPath, revPath, bepCoords, prodCoords };
   }, [graphPoints, calculations, prodQty, svgDimensions.width, svgDimensions.height, svgDimensions.padding]);
 
   const formatRupiah = (val) => {
@@ -143,56 +126,81 @@ export default function BEPCalculator({ initialData }) {
     <div className="glass-panel" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
       <div>
         <h3 style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-primary)' }}>
-          📊 Kalkulator BEP & Proyeksi Finansial
+          📊 Analisis Biaya & Kelayakan Finansial (BEP)
         </h3>
         <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
-          Masukkan estimasi biaya operasional digital siswa SMA untuk simulasi bisnis yang realistis.
+          Struktur biaya operasional dan proyeksi titik balik modal (Break-Even Point) yang diekstrak dari proposal Anda.
         </p>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px' }}>
-        {/* Cost Inputs */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          <div style={{ borderBottom: '1px solid var(--border-color)', paddingBottom: '8px' }}>
-            <span style={{ fontSize: '0.85rem', fontWeight: 'bold', color: 'var(--accent-gold)' }}>1. Biaya Tetap (Bulanan)</span>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Server / Cloud Hosting</label>
-            <input type="number" className="custom-input" value={serverCost} onChange={e => setServerCost(Math.max(0, parseInt(e.target.value) || 0))} style={{ padding: '8px 12px' }} />
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Koneksi Internet Tim</label>
-            <input type="number" className="custom-input" value={internetCost} onChange={e => setInternetCost(Math.max(0, parseInt(e.target.value) || 0))} style={{ padding: '8px 12px' }} />
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Penyusutan Alat (Laptop/HP)</label>
-            <input type="number" className="custom-input" value={depreciationCost} onChange={e => setDepreciationCost(Math.max(0, parseInt(e.target.value) || 0))} style={{ padding: '8px 12px' }} />
+      {/* Read-only financial structures instead of inputs */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '20px', backgroundColor: 'rgba(99, 102, 241, 0.02)', padding: '20px', borderRadius: '16px', border: '1.5px solid var(--border-color)' }}>
+        
+        {/* Fixed costs read-only display */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <span style={{ fontSize: '0.82rem', fontWeight: '800', color: 'var(--accent-gold)', borderBottom: '1.5px solid var(--border-color)', paddingBottom: '6px', display: 'block' }}>
+            📌 Rincian Biaya Tetap (Bulanan)
+          </span>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.78rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(0,0,0,0.03)', paddingBottom: '4px' }}>
+              <span style={{ color: 'var(--text-secondary)' }}>Server / Cloud Hosting:</span>
+              <span style={{ fontWeight: '800', color: 'var(--text-primary)' }}>{formatRupiah(serverCost)}</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(0,0,0,0.03)', paddingBottom: '4px' }}>
+              <span style={{ color: 'var(--text-secondary)' }}>Koneksi Internet Tim:</span>
+              <span style={{ fontWeight: '800', color: 'var(--text-primary)' }}>{formatRupiah(internetCost)}</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(0,0,0,0.03)', paddingBottom: '4px' }}>
+              <span style={{ color: 'var(--text-secondary)' }}>Software & Lisensi:</span>
+              <span style={{ fontWeight: '800', color: 'var(--text-primary)' }}>{formatRupiah(softwareCost)}</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '4px' }}>
+              <span style={{ color: 'var(--text-secondary)' }}>Penyusutan Alat (Laptop/HP):</span>
+              <span style={{ fontWeight: '800', color: 'var(--text-primary)' }}>{formatRupiah(depreciationCost)}</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '2px solid var(--border-color)', paddingTop: '6px', fontWeight: '800', color: 'var(--accent-gold)' }}>
+              <span>Total Biaya Tetap:</span>
+              <span>{formatRupiah(calculations.totalFixed)}</span>
+            </div>
           </div>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          <div style={{ borderBottom: '1px solid var(--border-color)', paddingBottom: '8px' }}>
-            <span style={{ fontSize: '0.85rem', fontWeight: 'bold', color: 'var(--accent-blue)' }}>2. Biaya Variabel & Harga</span>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Bahan Baku / Lisensi Aset (per unit)</label>
-            <input type="number" className="custom-input" value={rawMaterials} onChange={e => setRawMaterials(Math.max(0, parseInt(e.target.value) || 0))} style={{ padding: '8px 12px' }} />
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Biaya Kirim / Transport (per unit)</label>
-            <input type="number" className="custom-input" value={transportCost} onChange={e => setTransportCost(Math.max(0, parseInt(e.target.value) || 0))} style={{ padding: '8px 12px' }} />
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Harga Jual Produk (per unit)</label>
-            <input type="number" className="custom-input" value={sellingPrice} onChange={e => setSellingPrice(Math.max(0, parseInt(e.target.value) || 0))} style={{ padding: '8px 12px' }} />
+        {/* Variable costs & Price read-only display */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <span style={{ fontSize: '0.82rem', fontWeight: '800', color: 'var(--accent-blue)', borderBottom: '1.5px solid var(--border-color)', paddingBottom: '6px', display: 'block' }}>
+            📌 Biaya Variabel & Nilai Jual (Per Unit)
+          </span>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.78rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(0,0,0,0.03)', paddingBottom: '4px' }}>
+              <span style={{ color: 'var(--text-secondary)' }}>Bahan Baku / Lisensi Aset:</span>
+              <span style={{ fontWeight: '800', color: 'var(--text-primary)' }}>{formatRupiah(rawMaterials)}</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(0,0,0,0.03)', paddingBottom: '4px' }}>
+              <span style={{ color: 'var(--text-secondary)' }}>Biaya Kirim / Transportasi:</span>
+              <span style={{ fontWeight: '800', color: 'var(--text-primary)' }}>{formatRupiah(transportCost)}</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(0,0,0,0.03)', paddingBottom: '4px' }}>
+              <span style={{ color: 'var(--text-secondary)' }}>Biaya Operasional & Pemasaran:</span>
+              <span style={{ fontWeight: '800', color: 'var(--text-primary)' }}>{formatRupiah(marketingCost)}</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '2px solid var(--border-color)', paddingTop: '6px', fontWeight: '800', color: 'var(--accent-blue)' }}>
+              <span>Harga Jual Produk:</span>
+              <span>{formatRupiah(sellingPrice)}</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: '700', color: 'var(--text-muted)' }}>
+              <span>Target Produksi Bulanan:</span>
+              <span>{prodQty} Unit</span>
+            </div>
           </div>
         </div>
+
       </div>
 
+      {/* Financial calculations output cards */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px', backgroundColor: 'var(--accent-blue-glow)', padding: '20px', borderRadius: '16px', border: '1.5px solid var(--border-color)' }}>
-        {/* Results */}
+        
         <div style={{ backgroundColor: 'white', padding: '16px', borderRadius: '12px', border: '1px solid var(--border-color)', boxShadow: '0 4px 10px rgba(0,0,0,0.01)' }}>
-          <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--accent-gold)', fontWeight: '800', letterSpacing: '0.5px' }}>BEP Realistis</span>
+          <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--accent-gold)', fontWeight: '800', letterSpacing: '0.5px' }}>Titik Balik Modal (BEP)</span>
           <h4 style={{ fontSize: '1.5rem', color: 'var(--accent-gold)', marginTop: '6px', fontWeight: '900' }}>
             {calculations.bepUnit} <span style={{ fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: 'bold' }}>Unit</span>
           </h4>
@@ -200,13 +208,15 @@ export default function BEPCalculator({ initialData }) {
             Setara dengan {formatRupiah(calculations.bepRupiah)}
           </p>
         </div>
-        
-        <div style={{ backgroundColor: 'white', padding: '16px', borderRadius: '12px', border: '1px solid var(--border-color)', boxShadow: '0 4px 10px rgba(0,0,0,0.01)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-          <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--accent-blue)', fontWeight: '800', letterSpacing: '0.5px' }}>Volume Produksi Bulanan</span>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: '8px' }}>
-            <input type="range" min="1" max="200" value={prodQty} onChange={e => setProdQty(parseInt(e.target.value))} style={{ flex: 1, accentColor: 'var(--accent-blue)', height: '6px' }} />
-            <span style={{ fontSize: '0.95rem', fontWeight: '800', color: 'var(--accent-blue)', width: '50px', textAlign: 'right' }}>{prodQty} U</span>
-          </div>
+
+        <div style={{ backgroundColor: 'white', padding: '16px', borderRadius: '12px', border: '1px solid var(--border-color)', boxShadow: '0 4px 10px rgba(0,0,0,0.01)' }}>
+          <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--accent-blue)', fontWeight: '800', letterSpacing: '0.5px' }}>Estimasi Omzet Bulanan</span>
+          <h4 style={{ fontSize: '1.5rem', color: 'var(--accent-blue)', marginTop: '6px', fontWeight: '900' }}>
+            {formatRupiah(calculations.totalRevenue)}
+          </h4>
+          <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', marginTop: '4px', fontWeight: '600' }}>
+            Dari target {prodQty} unit/bulan
+          </p>
         </div>
 
         <div style={{ backgroundColor: 'white', padding: '16px', borderRadius: '12px', border: '1px solid var(--border-color)', boxShadow: '0 4px 10px rgba(0,0,0,0.01)' }}>
@@ -218,6 +228,7 @@ export default function BEPCalculator({ initialData }) {
             {calculations.netProfit >= 0 ? '🟢 Menguntungkan (Profit)' : '🔴 Merugi (Rugi)'}
           </span>
         </div>
+
       </div>
 
       {/* SVG Chart */}
@@ -279,9 +290,30 @@ export default function BEPCalculator({ initialData }) {
         <p style={{ lineHeight: '1.5', fontWeight: '500' }}>
           Jumlah biaya tetap bulanan Anda adalah <b>{formatRupiah(calculations.totalFixed)}</b>. 
           Dengan harga jual <b>{formatRupiah(sellingPrice)}</b> dan biaya variabel <b>{formatRupiah(calculations.variablePerUnit)}</b> per unit, margin keuntungan kotor Anda adalah <b>{formatRupiah(calculations.marginPerUnit)}</b> per unit. 
-          Target penjualan <b>{calculations.bepUnit} unit</b> adalah angka yang realistis untuk dicapai oleh siswa SMA dalam lingkup pasar sekolah atau lokal.
+          Target penjualan <b>{calculations.bepUnit} unit</b> untuk mencapai BEP adalah angka realistis dalam lingkup pasar lokal sekolah.
         </p>
       </div>
+
+      {/* Detailed AI advice card for Finance (inserted here!) */}
+      {reviewData && (
+        <div className="glass-panel" style={{ padding: '20px', background: 'linear-gradient(to right, rgba(16, 185, 129, 0.03), #ffffff)', borderLeft: '5px solid var(--accent-green)', borderRadius: '12px', marginTop: '10px' }}>
+          <h4 style={{ fontSize: '0.9rem', fontWeight: '800', color: 'var(--accent-green)', display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+            📋 Rekomendasi Juri: Kelayakan Finansial & Proyeksi BEP
+          </h4>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.8rem' }}>
+            <p><b>🔍 Keadaan di Proposal Anda (Realita):</b><br />
+              <span style={{ color: 'var(--text-secondary)' }}>{reviewData.realita}</span>
+            </p>
+            <p><b>💡 Kondisi Ideal Lomba:</b><br />
+              <span style={{ color: 'var(--text-muted)' }}>{reviewData.ideal}</span>
+            </p>
+            <div style={{ backgroundColor: 'var(--accent-green-glow)', padding: '12px', borderRadius: '8px', borderLeft: '3px solid var(--accent-green)', marginTop: '4px' }}>
+              <span style={{ fontWeight: 'bold', color: 'var(--accent-green)' }}>Saran Perbaikan Detail:</span>
+              <p style={{ color: 'var(--text-primary)', marginTop: '4px', lineHeight: '1.4' }}>{reviewData.rekomendasi}</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

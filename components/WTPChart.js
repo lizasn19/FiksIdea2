@@ -1,27 +1,13 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useMemo } from 'react';
 
-export default function WTPChart({ initialData }) {
-  // Survey response counts for 5 price tiers
-  const [tier1, setTier1] = useState(30); // Rp 25k
-  const [tier2, setTier2] = useState(25); // Rp 35k
-  const [tier3, setTier3] = useState(15); // Rp 50k
-  const [tier4, setTier4] = useState(6);  // Rp 75k
-  const [tier5, setTier5] = useState(2);  // Rp 100k
+export default function WTPChart({ initialData, reviewData }) {
+  const tier1 = initialData?.tier1 ?? 0;
+  const tier2 = initialData?.tier2 ?? 0;
+  const tier3 = initialData?.tier3 ?? 0;
+  const tier4 = initialData?.tier4 ?? 0;
+  const tier5 = initialData?.tier5 ?? 0;
 
-  // Synchronise with AI extracted data if available
-  useEffect(() => {
-    if (initialData) {
-      setTier1(initialData.tier1 ?? 0);
-      setTier2(initialData.tier2 ?? 0);
-      setTier3(initialData.tier3 ?? 0);
-      setTier4(initialData.tier4 ?? 0);
-      setTier5(initialData.tier5 ?? 0);
-    }
-  }, [initialData]);
-
-  const totalSurveyed = 30; // Static baseline representing maximum participants
-
-  // Prices for each tier
+  const totalSurveyed = 30;
   const prices = [25000, 35000, 50000, 75000, 100000];
 
   const dataPoints = useMemo(() => {
@@ -29,7 +15,6 @@ export default function WTPChart({ initialData }) {
     return prices.map((price, idx) => {
       const count = Math.min(responses[idx], totalSurveyed);
       const percentage = totalSurveyed > 0 ? (count / totalSurveyed) * 100 : 0;
-      // Revenue calculation if priced at this tier: price * count
       const potentialRevenue = price * count;
       return {
         price,
@@ -40,7 +25,6 @@ export default function WTPChart({ initialData }) {
     });
   }, [tier1, tier2, tier3, tier4, tier5]);
 
-  // Find the optimal price tier (maximizing potential revenue)
   const optimalTier = useMemo(() => {
     let maxRev = -1;
     let opt = dataPoints[0];
@@ -53,10 +37,8 @@ export default function WTPChart({ initialData }) {
     return opt;
   }, [dataPoints]);
 
-  // SVG dimensions
   const svgDimensions = { width: 450, height: 220, padding: 40 };
 
-  // Calculate SVG Paths & coordinates
   const svgData = useMemo(() => {
     const getX = (idx) => svgDimensions.padding + (idx / 4) * (svgDimensions.width - svgDimensions.padding * 2);
     const getY = (percent) => svgDimensions.height - svgDimensions.padding - (percent / 100) * (svgDimensions.height - svgDimensions.padding * 2);
@@ -89,58 +71,43 @@ export default function WTPChart({ initialData }) {
           📈 Analisis Harga & Minat Beli (WTP)
         </h3>
         <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
-          Simulasi grafik kesediaan membayar (Willingness to Pay) dari hasil survei pasar terhadap 30 responden.
+          Visualisasi kesediaan membayar (Willingness to Pay) dari hasil survei proposal yang diekstrak oleh AI.
         </p>
       </div>
 
-      {/* Input sliders for the tiers */}
+      {/* Read-only badges layout instead of sliders */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', backgroundColor: 'var(--accent-blue-glow)', padding: '20px', borderRadius: '16px', border: '1.5px solid var(--border-color)' }}>
-        <span style={{ fontSize: '0.82rem', fontWeight: '800', color: 'var(--text-primary)' }}>📊 Hasil Survei: Jumlah Responden Rela Membayar di Tiap Tingkat Harga</span>
+        <span style={{ fontSize: '0.82rem', fontWeight: '800', color: 'var(--text-primary)' }}>📊 Hasil Ekstraksi Survei: Distribusi Minat Beli Responden</span>
         
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '14px' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', backgroundColor: 'white', padding: '10px 14px', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem' }}>
-              <span style={{ fontWeight: '600' }}>Rp 25.000 <span style={{ color: 'var(--accent-green)', fontWeight: 'bold' }}>(Sangat Murah)</span></span>
-              <span style={{ fontWeight: '800', color: 'var(--accent-blue)' }}>{tier1} Orang</span>
-            </div>
-            <input type="range" min="0" max="30" value={tier1} onChange={e => setTier1(parseInt(e.target.value))} style={{ accentColor: 'var(--accent-blue)', height: '6px' }} />
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '12px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', backgroundColor: 'white', padding: '10px 14px', borderRadius: '12px', border: '1px solid var(--border-color)', fontSize: '0.78rem' }}>
+            <span style={{ fontWeight: '600' }}>Rp 25.000 <span style={{ color: 'var(--accent-green)', fontWeight: 'bold' }}>(Sangat Murah)</span></span>
+            <span style={{ fontWeight: '800', color: 'var(--accent-blue)' }}>{tier1} Responden</span>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', backgroundColor: 'white', padding: '10px 14px', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem' }}>
-              <span style={{ fontWeight: '600' }}>Rp 35.000 <span style={{ color: 'var(--accent-green)', fontWeight: 'bold' }}>(Murah)</span></span>
-              <span style={{ fontWeight: '800', color: 'var(--accent-blue)' }}>{tier2} Orang</span>
-            </div>
-            <input type="range" min="0" max="30" value={tier2} onChange={e => setTier2(parseInt(e.target.value))} style={{ accentColor: 'var(--accent-blue)', height: '6px' }} />
+          <div style={{ display: 'flex', justifyContent: 'space-between', backgroundColor: 'white', padding: '10px 14px', borderRadius: '12px', border: '1px solid var(--border-color)', fontSize: '0.78rem' }}>
+            <span style={{ fontWeight: '600' }}>Rp 35.000 <span style={{ color: 'var(--accent-green)', fontWeight: 'bold' }}>(Murah)</span></span>
+            <span style={{ fontWeight: '800', color: 'var(--accent-blue)' }}>{tier2} Responden</span>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', backgroundColor: 'white', padding: '10px 14px', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem' }}>
-              <span style={{ fontWeight: '600' }}>Rp 50.000 <span style={{ color: 'var(--accent-gold)', fontWeight: 'bold' }}>(Wajar)</span></span>
-              <span style={{ fontWeight: '800', color: 'var(--accent-blue)' }}>{tier3} Orang</span>
-            </div>
-            <input type="range" min="0" max="30" value={tier3} onChange={e => setTier3(parseInt(e.target.value))} style={{ accentColor: 'var(--accent-blue)', height: '6px' }} />
+          <div style={{ display: 'flex', justifyContent: 'space-between', backgroundColor: 'white', padding: '10px 14px', borderRadius: '12px', border: '1px solid var(--border-color)', fontSize: '0.78rem' }}>
+            <span style={{ fontWeight: '600' }}>Rp 50.000 <span style={{ color: 'var(--accent-gold)', fontWeight: 'bold' }}>(Wajar)</span></span>
+            <span style={{ fontWeight: '800', color: 'var(--accent-blue)' }}>{tier3} Responden</span>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', backgroundColor: 'white', padding: '10px 14px', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem' }}>
-              <span style={{ fontWeight: '600' }}>Rp 75.000 <span style={{ color: 'var(--accent-red)', fontWeight: 'bold' }}>(Mahal)</span></span>
-              <span style={{ fontWeight: '800', color: 'var(--accent-blue)' }}>{tier4} Orang</span>
-            </div>
-            <input type="range" min="0" max="30" value={tier4} onChange={e => setTier4(parseInt(e.target.value))} style={{ accentColor: 'var(--accent-blue)', height: '6px' }} />
+          <div style={{ display: 'flex', justifyContent: 'space-between', backgroundColor: 'white', padding: '10px 14px', borderRadius: '12px', border: '1px solid var(--border-color)', fontSize: '0.78rem' }}>
+            <span style={{ fontWeight: '600' }}>Rp 75.000 <span style={{ color: 'var(--accent-red)', fontWeight: 'bold' }}>(Mahal)</span></span>
+            <span style={{ fontWeight: '800', color: 'var(--accent-blue)' }}>{tier4} Responden</span>
           </div>
         </div>
         
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', backgroundColor: 'white', padding: '10px 14px', borderRadius: '12px', border: '1px solid var(--border-color)', maxWidth: '320px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem' }}>
-            <span style={{ fontWeight: '600' }}>Rp 100.000 <span style={{ color: 'var(--accent-red)', fontWeight: 'bold' }}>(Sangat Mahal)</span></span>
-            <span style={{ fontWeight: '800', color: 'var(--accent-blue)' }}>{tier5} Orang</span>
-          </div>
-          <input type="range" min="0" max="30" value={tier5} onChange={e => setTier5(parseInt(e.target.value))} style={{ accentColor: 'var(--accent-blue)', height: '6px' }} />
+        <div style={{ display: 'flex', justifyContent: 'space-between', backgroundColor: 'white', padding: '10px 14px', borderRadius: '12px', border: '1px solid var(--border-color)', fontSize: '0.78rem', maxWidth: '280px' }}>
+          <span style={{ fontWeight: '600' }}>Rp 100.000 <span style={{ color: 'var(--accent-red)', fontWeight: 'bold' }}>(Sangat Mahal)</span></span>
+          <span style={{ fontWeight: '800', color: 'var(--accent-blue)' }}>{tier5} Responden</span>
         </div>
       </div>
 
-      {/* SVG graph */}
+      {/* SVG Graph */}
       <div style={{ display: 'flex', justifyContent: 'center', overflowX: 'auto', background: 'linear-gradient(to bottom, #ffffff, #f7f9fc)', border: '1.5px solid var(--border-color)', borderRadius: '16px', padding: '16px', boxShadow: 'inset 0 4px 10px rgba(0,0,0,0.01)' }}>
         <svg width={svgDimensions.width} height={svgDimensions.height}>
           {/* Grid lines */}
@@ -179,7 +146,7 @@ export default function WTPChart({ initialData }) {
 
           {/* Title inside graph */}
           <text x={svgDimensions.width / 2} y={15} textAnchor="middle" fill="var(--text-secondary)" fontSize="10px" fontWeight="800" letterSpacing="0.5px">
-            KURVA ELASTISITAS MINAT BELI RESPONDEN
+            KURVA ELASTISITAS MINAT BELI RESPONDEN (WTP)
           </text>
         </svg>
       </div>
@@ -197,17 +164,38 @@ export default function WTPChart({ initialData }) {
             {formatRupiah(optimalTier.price)}
           </h4>
           <p style={{ fontSize: '0.78rem', color: 'var(--text-primary)', marginTop: '4px', lineHeight: '1.4', fontWeight: '500' }}>
-            Didukung oleh <b>{optimalTier.percentage}%</b> responden dengan estimasi omzet tertinggi: <b>{formatRupiah(optimalTier.potentialRevenue)}</b>.
+            Didukung oleh <b>{optimalTier.percentage}%</b> responden dengan omzet tertinggi: <b>{formatRupiah(optimalTier.potentialRevenue)}</b>.
           </p>
         </div>
 
         <div style={{ fontSize: '0.8rem', color: 'var(--text-primary)', display: 'flex', flexDirection: 'column', gap: '6px', borderLeft: '4px solid var(--accent-blue)', paddingLeft: '16px', justifyContent: 'center' }}>
-          <p style={{ fontWeight: '800', color: 'var(--accent-blue)' }}>💡 Tips Validasi Pasar FIKSI:</p>
+          <p style={{ fontWeight: '800', color: 'var(--accent-blue)' }}>💡 Analisis Penetapan Harga:</p>
           <p style={{ lineHeight: '1.5', fontWeight: '500' }}>
-            Juri menyukai data riil. Grafik WTP ini membuktikan Anda tidak asal menentukan harga, melainkan berdasarkan kesanggupan bayar target konsumen digital Anda secara rasional.
+            Berdasarkan survei pasar yang terbaca, harga optimal produk Anda adalah <b>{formatRupiah(optimalTier.price)}</b>. Penentuan harga ini dinilai rasional di mata juri karena didasari kesediaan membayar (WTP) riil responden, bukan tebakan sepihak.
           </p>
         </div>
       </div>
+
+      {/* Detailed AI advice card */}
+      {reviewData && (
+        <div className="glass-panel" style={{ padding: '20px', background: 'linear-gradient(to right, rgba(99, 102, 241, 0.03), #ffffff)', borderLeft: '5px solid var(--accent-blue)', borderRadius: '12px', marginTop: '10px' }}>
+          <h4 style={{ fontSize: '0.9rem', fontWeight: '800', color: 'var(--accent-blue)', display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+            📋 Rekomendasi Juri: Strategi Validasi Pasar
+          </h4>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.8rem' }}>
+            <p><b>🔍 Keadaan di Proposal Anda (Realita):</b><br />
+              <span style={{ color: 'var(--text-secondary)' }}>{reviewData.realita}</span>
+            </p>
+            <p><b>💡 Kondisi Ideal Lomba:</b><br />
+              <span style={{ color: 'var(--text-muted)' }}>{reviewData.ideal}</span>
+            </p>
+            <div style={{ backgroundColor: 'var(--accent-blue-glow)', padding: '12px', borderRadius: '8px', borderLeft: '3px solid var(--accent-blue)', marginTop: '4px' }}>
+              <span style={{ fontWeight: 'bold', color: 'var(--accent-blue)' }}>Saran Perbaikan Detail:</span>
+              <p style={{ color: 'var(--text-primary)', marginTop: '4px', lineHeight: '1.4' }}>{reviewData.rekomendasi}</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

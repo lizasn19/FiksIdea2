@@ -2,20 +2,20 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { 
-  Award, 
-  Upload, 
-  RefreshCw, 
-  Activity, 
-  DollarSign, 
-  TrendingUp, 
-  Calendar, 
-  Leaf, 
-  Sliders, 
-  FileText, 
-  CheckCircle2, 
-  XCircle, 
-  AlertTriangle, 
+import {
+  Award,
+  Upload,
+  RefreshCw,
+  Activity,
+  DollarSign,
+  TrendingUp,
+  Calendar,
+  Leaf,
+  Sliders,
+  FileText,
+  CheckCircle2,
+  XCircle,
+  AlertTriangle,
   Info,
   ChevronRight,
   ChevronLeft,
@@ -60,7 +60,7 @@ export default function Home() {
         setLoadingStatus('Mengekstrak teks dari berkas PDF...');
       } else if (currentProgress < 40) {
         currentProgress += 3;
-        setLoadingStatus('Mengirim teks proposal ke AI Model Gemma-4-31B-IT...');
+        setLoadingStatus('Mengirim teks proposal ke AI ...');
       } else if (currentProgress < 75) {
         currentProgress += 1.5;
         setLoadingStatus('Model Gemma-4 sedang berpikir & menganalisis draf proposal Anda...');
@@ -95,7 +95,7 @@ export default function Home() {
       const result = await response.json();
       setProgress(100);
       setLoadingStatus('Analisis selesai!');
-      
+
       // Delay step transition slightly so the user sees 100% completion
       setTimeout(() => {
         setEvaluation(result);
@@ -129,7 +129,7 @@ export default function Home() {
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      
+
       {/* Top Header Navbar */}
       <header className="glass-panel" style={{ margin: '20px 20px 10px 20px', padding: '16px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderRadius: '16px', borderBottom: '3px solid var(--accent-blue)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -149,19 +149,19 @@ export default function Home() {
             <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 'bold', letterSpacing: '0.5px' }}>Deadline Lomba FIKSI</span>
             <p style={{ fontSize: '0.85rem', fontWeight: '800', color: 'var(--accent-gold)' }}>⏳ 10 Juli 2026 (Submit Online)</p>
           </div>
-          <button 
-            onClick={() => setShowGuide(!showGuide)} 
-            className="tab-button" 
-            style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              gap: '8px', 
-              padding: '10px 14px', 
-              borderRadius: '10px', 
-              border: '1.5px solid var(--accent-gold)', 
-              backgroundColor: showGuide ? 'var(--accent-gold-glow)' : 'transparent', 
-              color: 'var(--text-primary)', 
-              transition: 'all 0.2s ease', 
+          <button
+            onClick={() => setShowGuide(!showGuide)}
+            className="tab-button"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '10px 14px',
+              borderRadius: '10px',
+              border: '1.5px solid var(--accent-gold)',
+              backgroundColor: showGuide ? 'var(--accent-gold-glow)' : 'transparent',
+              color: 'var(--text-primary)',
+              transition: 'all 0.2s ease',
               fontWeight: '800',
               boxShadow: '0 4px 10px rgba(245, 158, 11, 0.05)'
             }}
@@ -181,9 +181,9 @@ export default function Home() {
           <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '4px', lineHeight: '1.5' }}>
             Ikuti petunjuk dan strategi rahasia berikut agar proposal wirausaha tim Anda mendapatkan penilaian tinggi dari juri nasional!
           </p>
-          
+
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px', marginTop: '16px' }}>
-            
+
             {/* Column 1: Syarat Berkas */}
             <div style={{ backgroundColor: 'white', padding: '16px', borderRadius: '12px', border: '1px solid var(--border-color)', boxShadow: '0 4px 10px rgba(0,0,0,0.01)' }}>
               <span style={{ fontSize: '0.8rem', fontWeight: '800', color: 'var(--accent-blue)', display: 'block', marginBottom: '6px' }}>
@@ -223,9 +223,9 @@ export default function Home() {
 
           </div>
 
-          <button 
-            className="glow-button" 
-            onClick={() => setShowGuide(false)} 
+          <button
+            className="glow-button"
+            onClick={() => setShowGuide(false)}
             style={{ marginTop: '20px', padding: '8px 20px', fontSize: '0.8rem', background: 'linear-gradient(135deg, var(--accent-gold) 0%, #ea580c 100%)', boxShadow: '0 4px 12px rgba(245, 158, 11, 0.2)' }}
           >
             Tutup Panduan
@@ -277,26 +277,26 @@ export default function Home() {
                   justifyContent: 'center',
                   fontSize: '0.85rem',
                   fontWeight: '800',
-                  background: isActive 
-                    ? 'linear-gradient(135deg, var(--accent-blue) 0%, #8b5cf6 100%)' 
-                    : isCompleted 
-                    ? 'linear-gradient(135deg, var(--accent-green) 0%, #059669 100%)'
-                    : 'rgba(99, 102, 241, 0.05)',
-                  color: (isActive || isCompleted) 
-                    ? 'white' 
+                  background: isActive
+                    ? 'linear-gradient(135deg, var(--accent-blue) 0%, #8b5cf6 100%)'
+                    : isCompleted
+                      ? 'linear-gradient(135deg, var(--accent-green) 0%, #059669 100%)'
+                      : 'rgba(99, 102, 241, 0.05)',
+                  color: (isActive || isCompleted)
+                    ? 'white'
                     : 'var(--text-muted)',
                   border: `2px solid ${isActive ? 'var(--accent-blue)' : isCompleted ? 'var(--accent-green)' : 'var(--border-color)'}`,
-                  boxShadow: isActive 
-                    ? '0 4px 12px rgba(99, 102, 241, 0.3)' 
-                    : isCompleted 
-                    ? '0 4px 12px rgba(16, 185, 129, 0.2)' 
-                    : 'none'
+                  boxShadow: isActive
+                    ? '0 4px 12px rgba(99, 102, 241, 0.3)'
+                    : isCompleted
+                      ? '0 4px 12px rgba(16, 185, 129, 0.2)'
+                      : 'none'
                 }}>
                   {isCompleted ? '✓' : stepNum}
                 </div>
-                <span style={{ 
-                  fontSize: '0.8rem', 
-                  fontWeight: isActive ? '800' : '600', 
+                <span style={{
+                  fontSize: '0.8rem',
+                  fontWeight: isActive ? '800' : '600',
                   color: isActive ? 'var(--accent-blue)' : isCompleted ? 'var(--accent-green)' : 'var(--text-secondary)',
                   display: 'none',
                   md: 'inline'
@@ -311,29 +311,29 @@ export default function Home() {
 
       {/* Main Wizard Content Area */}
       <main style={{ flex: 1, padding: '0 20px 30px 20px', maxWidth: '1100px', margin: '0 auto', width: '100%' }}>
-        
+
         {/* STEP 1: Input & PDF Upload */}
         {currentStep === 1 && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-            
+
             {/* Onboarding Welcome Banner Card */}
-            <div className="glass-panel" style={{ 
-              padding: '28px', 
+            <div className="glass-panel" style={{
+              padding: '28px',
               background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(244, 63, 94, 0.06) 100%)',
-              borderLeft: '6px solid var(--accent-blue)', 
+              borderLeft: '6px solid var(--accent-blue)',
               borderRadius: '16px',
               display: 'flex',
               alignItems: 'center',
               gap: '20px',
               flexWrap: 'wrap'
             }}>
-              <div style={{ 
-                width: '60px', 
-                height: '60px', 
-                borderRadius: '50%', 
-                background: 'linear-gradient(135deg, #6366f1 0%, #f43f5e 100%)', 
-                display: 'flex', 
-                alignItems: 'center', 
+              <div style={{
+                width: '60px',
+                height: '60px',
+                borderRadius: '50%',
+                background: 'linear-gradient(135deg, #6366f1 0%, #f43f5e 100%)',
+                display: 'flex',
+                alignItems: 'center',
                 justifyContent: 'center',
                 boxShadow: '0 8px 20px rgba(99, 102, 241, 0.3)'
               }}>
@@ -344,7 +344,7 @@ export default function Home() {
                   Halo Calon Juara FIKSI 2026! 🚀
                 </h2>
                 <p style={{ fontSize: '0.85rem', color: 'var(--text-primary)', marginTop: '6px', lineHeight: '1.5', opacity: 0.85 }}>
-                  Selamat datang di <b>FIKS-Idea Reviewer</b>. Siap menyulap ide wirausaha hebatmu menjadi proposal matang siap juara tingkat nasional? 
+                  Selamat datang di <b>FIKS-Idea Reviewer</b>. Siap menyulap ide wirausaha hebatmu menjadi proposal matang siap juara tingkat nasional?
                   Silakan unggah file PDF proposal tim Anda pada area di bawah untuk mendapatkan analisis bimbingan AI interaktif secara instan.
                 </p>
               </div>
@@ -367,18 +367,18 @@ export default function Home() {
                   <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '20px' }}>
                     Model: <span style={{ fontWeight: 'bold', color: 'var(--accent-blue)' }}>Gemma-4-31B-IT</span>
                   </p>
-                  
+
                   {/* Progress Bar */}
                   <div style={{ width: '100%', height: '12px', backgroundColor: 'rgba(99, 102, 241, 0.08)', borderRadius: '6px', overflow: 'hidden', position: 'relative', border: '1px solid var(--border-color)' }}>
                     <div style={{ width: `${progress}%`, height: '100%', background: 'linear-gradient(90deg, var(--accent-blue) 0%, #a855f7 50%, var(--accent-green) 100%)', borderRadius: '6px', transition: 'width 0.4s cubic-bezier(0.4, 0, 0.2, 1)' }} />
                   </div>
-                  
+
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '8px', fontSize: '0.78rem', fontWeight: 'bold', color: 'var(--text-muted)' }}>
                     <span>Proses: {Math.round(progress)}%</span>
                     <span>Estimasi total: ~30-45 detik</span>
                   </div>
                 </div>
-                
+
                 {/* Informative Tip */}
                 <div style={{ marginTop: '10px', padding: '14px 18px', backgroundColor: 'var(--accent-gold-glow)', border: '1px solid rgba(245, 158, 11, 0.2)', borderRadius: '12px', maxWidth: '550px', fontSize: '0.78rem', color: 'var(--text-primary)', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
                   <span style={{ fontSize: '1.1rem' }}>💡</span>
@@ -397,7 +397,7 @@ export default function Home() {
                 </div>
 
                 {/* Drag and Drop Zone */}
-                <div 
+                <div
                   onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
                   onDragLeave={() => setIsDragging(false)}
                   onDrop={(e) => {
@@ -422,24 +422,24 @@ export default function Home() {
                     boxShadow: 'inset 0 2px 8px rgba(99, 102, 241, 0.02)'
                   }}
                   onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--accent-blue)'}
-                  onMouseLeave={e => { if(!isDragging) e.currentTarget.style.borderColor = '#818cf8'; }}
+                  onMouseLeave={e => { if (!isDragging) e.currentTarget.style.borderColor = '#818cf8'; }}
                 >
-                  <input 
-                    type="file" 
-                    id="pdf-file-input" 
-                    accept=".pdf" 
+                  <input
+                    type="file"
+                    id="pdf-file-input"
+                    accept=".pdf"
                     onChange={(e) => {
                       const file = e.target.files[0];
                       if (file) setPdfFile(file);
                     }}
-                    style={{ display: 'none' }} 
+                    style={{ display: 'none' }}
                   />
-                  
+
                   <label htmlFor="pdf-file-input" style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '14px' }}>
                     <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '2px solid var(--border-color)', boxShadow: '0 6px 15px rgba(99, 102, 241, 0.05)' }}>
                       <Upload size={26} color="var(--accent-blue)" />
                     </div>
-                    
+
                     <div>
                       <span style={{ fontSize: '0.9rem', fontWeight: '800', display: 'block', color: 'var(--text-primary)' }}>
                         Seret & lepas berkas PDF proposal di sini
@@ -467,7 +467,7 @@ export default function Home() {
                         </span>
                       </div>
                     </div>
-                    <button 
+                    <button
                       onClick={() => setPdfFile(null)}
                       style={{ background: 'none', border: 'none', color: 'var(--accent-red)', cursor: 'pointer', fontSize: '0.78rem', fontWeight: '800', padding: '6px 12px', borderRadius: '8px', transition: 'all 0.2s' }}
                       onMouseEnter={e => e.currentTarget.style.backgroundColor = 'var(--accent-red-glow)'}
@@ -478,10 +478,10 @@ export default function Home() {
                   </div>
                 )}
 
-                <button 
-                  className="glow-button-green" 
-                  onClick={handleEvaluate} 
-                  disabled={loading} 
+                <button
+                  className="glow-button-green"
+                  onClick={handleEvaluate}
+                  disabled={loading}
                   style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', alignSelf: 'flex-start', padding: '14px 28px', fontSize: '0.9rem', borderRadius: '12px' }}
                 >
                   <Activity size={18} />
@@ -495,7 +495,7 @@ export default function Home() {
         {/* STEP 2: MVP Evaluation & SDGs Mapping */}
         {currentStep === 2 && evaluation && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            
+
             {/* AI Review Scoreboard Card */}
             <div className="glass-panel" style={{ padding: '24px', borderLeft: '4px solid var(--accent-blue)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
@@ -507,7 +507,7 @@ export default function Home() {
                   {evaluation.mvp.status}
                 </span>
               </div>
-              
+
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '16px', fontSize: '0.8rem' }}>
                 <p><b>🔍 Kondisi Realita di Proposal Anda:</b><br />
                   <span style={{ color: 'var(--text-secondary)' }}>{evaluation.mvp.realita}</span>
@@ -531,125 +531,41 @@ export default function Home() {
         {/* STEP 3: Market Validation & WTP Price Curve */}
         {currentStep === 3 && evaluation && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            
-            <div className="glass-panel" style={{ padding: '24px', borderLeft: '4px solid var(--accent-blue)' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
-                <div>
-                  <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)' }}>Aspek 2 / 4 Penilaian Juri</span>
-                  <h2 style={{ fontSize: '1.2rem', color: 'var(--text-primary)', marginTop: '4px' }}>Validasi Pasar & Kepuasan Pengguna (Bobot 25%)</h2>
-                </div>
-                <span className={`status-badge ${evaluation.market.status.includes('BAGUS') ? 'juara' : 'ditolak'}`}>
-                  {evaluation.market.status}
-                </span>
-              </div>
-              
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '16px', fontSize: '0.8rem' }}>
-                <p><b>🔍 Kondisi Realita di Proposal Anda:</b><br />
-                  <span style={{ color: 'var(--text-secondary)' }}>{evaluation.market.realita}</span>
-                </p>
-                <p><b>💡 Kondisi Ideal Juri:</b><br />
-                  <span style={{ color: 'var(--text-muted)' }}>{evaluation.market.ideal}</span>
-                </p>
-                <div style={{ padding: '12px', backgroundColor: 'var(--accent-blue-glow)', borderRadius: '8px', borderLeft: '3px solid var(--accent-blue)', marginTop: '8px' }}>
-                  <span style={{ color: 'var(--accent-blue)', fontWeight: 'bold' }}>Langkah Perbaikan Juri:</span>
-                  <p style={{ color: 'var(--text-primary)', marginTop: '4px', lineHeight: '1.4' }}>{evaluation.market.rekomendasi}</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Corresponding Interactive Component: WTP Curve */}
-            <WTPChart initialData={evaluation.extractedWTP} />
-
+            <WTPChart initialData={evaluation.extractedWTP} reviewData={evaluation.market} />
           </div>
         )}
 
         {/* STEP 4: Financial Feasibility & BEP Calculator */}
         {currentStep === 4 && evaluation && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            
-            <div className="glass-panel" style={{ padding: '24px', borderLeft: '4px solid var(--accent-blue)' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
-                <div>
-                  <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)' }}>Aspek 3 / 4 Penilaian Juri</span>
-                  <h2 style={{ fontSize: '1.2rem', color: 'var(--text-primary)', marginTop: '4px' }}>Kelayakan Finansial & Proyeksi BEP (Bobot 25%)</h2>
-                </div>
-                <span className={`status-badge ${evaluation.finance.status.includes('BAGUS') ? 'juara' : 'ditolak'}`}>
-                  {evaluation.finance.status}
-                </span>
-              </div>
-              
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '16px', fontSize: '0.8rem' }}>
-                <p><b>🔍 Kondisi Realita di Proposal Anda:</b><br />
-                  <span style={{ color: 'var(--text-secondary)' }}>{evaluation.finance.realita}</span>
-                </p>
-                <p><b>💡 Kondisi Ideal Juri:</b><br />
-                  <span style={{ color: 'var(--text-muted)' }}>{evaluation.finance.ideal}</span>
-                </p>
-                <div style={{ padding: '12px', backgroundColor: 'var(--accent-blue-glow)', borderRadius: '8px', borderLeft: '3px solid var(--accent-blue)', marginTop: '8px' }}>
-                  <span style={{ color: 'var(--accent-blue)', fontWeight: 'bold' }}>Langkah Perbaikan Juri:</span>
-                  <p style={{ color: 'var(--text-primary)', marginTop: '4px', lineHeight: '1.4' }}>{evaluation.finance.rekomendasi}</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Corresponding Interactive Component: BEP Calculator */}
-            <BEPCalculator initialData={evaluation.extractedFinance} />
-
+            <BEPCalculator initialData={evaluation.extractedFinance} reviewData={evaluation.finance} />
           </div>
         )}
 
         {/* STEP 5: Implementation Schedule & Gantt Chart */}
         {currentStep === 5 && evaluation && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            
-            <div className="glass-panel" style={{ padding: '24px', borderLeft: '4px solid var(--accent-blue)' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
-                <div>
-                  <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)' }}>Aspek 4 / 4 Penilaian Juri</span>
-                  <h2 style={{ fontSize: '1.2rem', color: 'var(--text-primary)', marginTop: '4px' }}>Rencana Implementasi, Jadwal & Kemitraan (Bobot 20%)</h2>
-                </div>
-                <span className={`status-badge ${evaluation.implementation.status.includes('BAGUS') ? 'juara' : 'ditolak'}`}>
-                  {evaluation.implementation.status}
-                </span>
-              </div>
-              
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '16px', fontSize: '0.8rem' }}>
-                <p><b>🔍 Kondisi Realita di Proposal Anda:</b><br />
-                  <span style={{ color: 'var(--text-secondary)' }}>{evaluation.implementation.realita}</span>
-                </p>
-                <p><b>💡 Kondisi Ideal Juri:</b><br />
-                  <span style={{ color: 'var(--text-muted)' }}>{evaluation.implementation.ideal}</span>
-                </p>
-                <div style={{ padding: '12px', backgroundColor: 'var(--accent-blue-glow)', borderRadius: '8px', borderLeft: '3px solid var(--accent-blue)', marginTop: '8px' }}>
-                  <span style={{ color: 'var(--accent-blue)', fontWeight: 'bold' }}>Langkah Perbaikan Juri:</span>
-                  <p style={{ color: 'var(--text-primary)', marginTop: '4px', lineHeight: '1.4' }}>{evaluation.implementation.rekomendasi}</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Corresponding Interactive Component: Gantt Chart */}
-            <GanttChartGenerator initialData={evaluation.extractedGantt} />
-
+            <GanttChartGenerator initialData={evaluation.extractedGantt} reviewData={evaluation.implementation} />
           </div>
         )}
 
         {/* STEP 6: Overall Score & Final Checklist Report */}
         {currentStep === 6 && evaluation && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            
+
             {/* Main Score Banner */}
             <div className="glass-panel" style={{ padding: '30px', display: 'flex', alignItems: 'center', gap: '24px', flexWrap: 'wrap', borderLeft: `6px solid ${evaluation.overallScore >= 85 ? 'var(--accent-green)' : 'var(--accent-gold)'}` }}>
               {/* Score Circle */}
               <div style={{ position: 'relative', width: '90px', height: '90px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <svg width="90" height="90">
                   <circle cx="45" cy="45" r="38" fill="none" stroke="rgba(0,0,0,0.05)" strokeWidth="6" />
-                  <circle 
-                    cx="45" 
-                    cy="45" 
-                    r="38" 
-                    fill="none" 
-                    stroke={evaluation.overallScore >= 85 ? 'var(--accent-green)' : 'var(--accent-gold)'} 
-                    strokeWidth="6" 
+                  <circle
+                    cx="45"
+                    cy="45"
+                    r="38"
+                    fill="none"
+                    stroke={evaluation.overallScore >= 85 ? 'var(--accent-green)' : 'var(--accent-gold)'}
+                    strokeWidth="6"
                     strokeDasharray={`${2 * Math.PI * 38}`}
                     strokeDashoffset={`${2 * Math.PI * 38 * (1 - evaluation.overallScore / 100)}`}
                     strokeLinecap="round"
@@ -683,7 +599,7 @@ export default function Home() {
                   <span style={{ fontWeight: 'bold', color: 'var(--text-primary)' }}>1. Pilar Ekonomi & Tema FIKSI</span>
                   <p style={{ color: 'var(--text-secondary)', marginTop: '2px' }}>{evaluation.sustainability.pillarMatch}</p>
                 </div>
-                
+
                 <div style={{ borderBottom: '1px solid var(--border-color)', paddingBottom: '8px' }}>
                   <span style={{ fontWeight: 'bold', color: 'var(--text-primary)' }}>2. Integrasi SDGs PBB</span>
                   <p style={{ color: 'var(--text-secondary)', marginTop: '2px' }}>{evaluation.sustainability.sdgAdvice}</p>
@@ -697,8 +613,8 @@ export default function Home() {
             </div>
 
             {/* Restart Button */}
-            <button 
-              className="glow-button" 
+            <button
+              className="glow-button"
               onClick={() => {
                 setEvaluation(null);
                 setCurrentStep(1);
@@ -715,8 +631,8 @@ export default function Home() {
         {/* Navigation Buttons Row at bottom */}
         {evaluation && (
           <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '30px', borderTop: '1px solid var(--border-color)', paddingTop: '20px' }}>
-            <button 
-              className="tab-button" 
+            <button
+              className="tab-button"
               onClick={handlePrevStep}
               disabled={currentStep === 1}
               style={{ display: 'flex', alignItems: 'center', gap: '6px', opacity: currentStep === 1 ? 0.3 : 1 }}
@@ -729,8 +645,8 @@ export default function Home() {
               Halaman {currentStep} dari 6
             </span>
 
-            <button 
-              className="glow-button" 
+            <button
+              className="glow-button"
               onClick={handleNextStep}
               disabled={currentStep === 6}
               style={{ display: 'flex', alignItems: 'center', gap: '6px', opacity: currentStep === 6 ? 0.3 : 1 }}
