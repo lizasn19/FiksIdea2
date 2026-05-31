@@ -38,6 +38,8 @@ export default function Home() {
   const [currentStep, setCurrentStep] = useState(1); // Steps: 1 (Input), 2 (MVP), 3 (Pasar), 4 (Finansial), 5 (Implementasi), 6 (Ringkasan)
   const [alertMsg, setAlertMsg] = useState('');
   const [showGuide, setShowGuide] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [loadingStatus, setLoadingStatus] = useState('');
 
   const handleEvaluate = async () => {
     if (!pdfFile) {
@@ -47,6 +49,32 @@ export default function Home() {
 
     setLoading(true);
     setEvaluation(null);
+    setProgress(0);
+    setLoadingStatus('Mengekstrak teks dari berkas PDF...');
+
+    // Progress Simulation Interval
+    let currentProgress = 0;
+    const interval = setInterval(() => {
+      if (currentProgress < 15) {
+        currentProgress += 5;
+        setLoadingStatus('Mengekstrak teks dari berkas PDF...');
+      } else if (currentProgress < 40) {
+        currentProgress += 3;
+        setLoadingStatus('Mengirim teks proposal ke AI Model Gemma-4-31B-IT...');
+      } else if (currentProgress < 75) {
+        currentProgress += 1.5;
+        setLoadingStatus('Model Gemma-4 sedang berpikir & menganalisis draf proposal Anda...');
+      } else if (currentProgress < 90) {
+        currentProgress += 1;
+        setLoadingStatus('AI sedang mengevaluasi Purwarupa (MVP) & Uji Validasi Pasar...');
+      } else if (currentProgress < 98) {
+        currentProgress += 0.5;
+        setLoadingStatus('Menghitung kelayakan finansial & memetakan pilar SDGs...');
+      } else {
+        setLoadingStatus('Hampir selesai! Sedang memformat laporan penilaian juri...');
+      }
+      setProgress(Math.min(currentProgress, 99));
+    }, 450);
 
     try {
       // Evaluate using uploaded PDF file (multipart/form-data)
@@ -65,12 +93,19 @@ export default function Home() {
       }
 
       const result = await response.json();
-      setEvaluation(result);
-      setCurrentStep(2); // Automatically advance to Step 2 (MVP analysis) once evaluated
+      setProgress(100);
+      setLoadingStatus('Analisis selesai!');
+      
+      // Delay step transition slightly so the user sees 100% completion
+      setTimeout(() => {
+        setEvaluation(result);
+        setCurrentStep(2); // Automatically advance to Step 2 (MVP analysis) once evaluated
+      }, 600);
     } catch (error) {
       console.error(error);
       alert(`Gagal menganalisis: ${error.message}`);
     } finally {
+      clearInterval(interval);
       setLoading(false);
     }
   };
@@ -315,115 +350,145 @@ export default function Home() {
               </div>
             </div>
 
-            {/* PDF Uploader Zone Card */}
-            <div className="glass-panel" style={{ padding: '28px', display: 'flex', flexDirection: 'column', gap: '20px', background: 'rgba(255, 255, 255, 0.9)' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
-                <span style={{ fontSize: '0.9rem', fontWeight: '800', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <Upload size={20} color="var(--accent-blue)" /> Unggah Berkas Proposal Bisnis
-                </span>
-                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 'bold', backgroundColor: 'var(--bg-tertiary)', padding: '4px 10px', borderRadius: '20px' }}>Format File Wajib: PDF (.pdf)</span>
-              </div>
+            {/* PDF Uploader Zone Card / Loading Progress */}
+            {loading ? (
+              <div className="glass-panel" style={{ padding: '40px 28px', display: 'flex', flexDirection: 'column', gap: '24px', alignItems: 'center', justifyContent: 'center', background: 'rgba(255, 255, 255, 0.95)', minHeight: '320px', borderRadius: '16px', boxShadow: '0 10px 30px rgba(99, 102, 241, 0.08)' }}>
+                <div style={{ position: 'relative', width: '100px', height: '100px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <div style={{ position: 'absolute', width: '100%', height: '100%', borderRadius: '50%', border: '4px solid rgba(99, 102, 241, 0.1)', borderTop: '4px solid var(--accent-blue)', animation: 'spin 1.5s linear infinite' }} />
+                  <div style={{ width: '70px', height: '70px', borderRadius: '50%', background: 'linear-gradient(135deg, var(--accent-blue) 0%, #a855f7 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'pulse 2s infinite ease-in-out' }}>
+                    <RefreshCw size={30} color="white" className="animate-spin" style={{ animationDuration: '3s' }} />
+                  </div>
+                </div>
 
-              {/* Drag and Drop Zone */}
-              <div 
-                onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
-                onDragLeave={() => setIsDragging(false)}
-                onDrop={(e) => {
-                  e.preventDefault();
-                  setIsDragging(false);
-                  const file = e.dataTransfer.files[0];
-                  if (file && file.type === 'application/pdf') {
-                    setPdfFile(file);
-                  } else {
-                    alert('Hanya mendukung berkas berformat PDF.');
-                  }
-                }}
-                style={{
-                  border: `2px dashed ${isDragging ? 'var(--accent-blue)' : '#818cf8'}`,
-                  background: isDragging ? 'var(--accent-blue-glow)' : 'rgba(99, 102, 241, 0.02)',
-                  borderRadius: '16px',
-                  padding: '45px 20px',
-                  textAlign: 'center',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                  position: 'relative',
-                  boxShadow: 'inset 0 2px 8px rgba(99, 102, 241, 0.02)'
-                }}
-                onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--accent-blue)'}
-                onMouseLeave={e => { if(!isDragging) e.currentTarget.style.borderColor = '#818cf8'; }}
-              >
-                <input 
-                  type="file" 
-                  id="pdf-file-input" 
-                  accept=".pdf" 
-                  onChange={(e) => {
-                    const file = e.target.files[0];
-                    if (file) setPdfFile(file);
-                  }}
-                  style={{ display: 'none' }} 
-                />
-                
-                <label htmlFor="pdf-file-input" style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '14px' }}>
-                  <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '2px solid var(--border-color)', boxShadow: '0 6px 15px rgba(99, 102, 241, 0.05)' }}>
-                    <Upload size={26} color="var(--accent-blue)" />
+                <div style={{ textAlign: 'center', width: '100%', maxWidth: '550px' }}>
+                  <h3 style={{ fontSize: '1.2rem', fontWeight: '800', color: 'var(--text-primary)', marginBottom: '8px' }}>
+                    {loadingStatus}
+                  </h3>
+                  <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '20px' }}>
+                    Model: <span style={{ fontWeight: 'bold', color: 'var(--accent-blue)' }}>Gemma-4-31B-IT</span>
+                  </p>
+                  
+                  {/* Progress Bar */}
+                  <div style={{ width: '100%', height: '12px', backgroundColor: 'rgba(99, 102, 241, 0.08)', borderRadius: '6px', overflow: 'hidden', position: 'relative', border: '1px solid var(--border-color)' }}>
+                    <div style={{ width: `${progress}%`, height: '100%', background: 'linear-gradient(90deg, var(--accent-blue) 0%, #a855f7 50%, var(--accent-green) 100%)', borderRadius: '6px', transition: 'width 0.4s cubic-bezier(0.4, 0, 0.2, 1)' }} />
                   </div>
                   
-                  <div>
-                    <span style={{ fontSize: '0.9rem', fontWeight: '800', display: 'block', color: 'var(--text-primary)' }}>
-                      Seret & lepas berkas PDF proposal di sini
-                    </span>
-                    <span style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', marginTop: '6px', display: 'block' }}>
-                      atau <span style={{ color: 'var(--accent-blue)', textDecoration: 'underline', fontWeight: 'bold' }}>klik untuk cari berkas</span> dari komputer Anda
-                    </span>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '8px', fontSize: '0.78rem', fontWeight: 'bold', color: 'var(--text-muted)' }}>
+                    <span>Proses: {Math.round(progress)}%</span>
+                    <span>Estimasi total: ~30-45 detik</span>
                   </div>
-                </label>
-              </div>
-
-              {/* Selected PDF file summary card */}
-              {pdfFile && (
-                <div style={{ padding: '14px 18px', backgroundColor: 'var(--accent-blue-glow)', border: '1px solid rgba(99, 102, 241, 0.25)', borderRadius: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', boxShadow: '0 4px 12px rgba(99, 102, 241, 0.05)' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <div style={{ width: '36px', height: '36px', borderRadius: '8px', backgroundColor: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid var(--border-color)' }}>
-                      <FileCheck size={20} color="var(--accent-green)" />
-                    </div>
-                    <div>
-                      <span style={{ fontSize: '0.85rem', fontWeight: '800', display: 'block', color: 'var(--text-primary)', maxWidth: '280px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={pdfFile.name}>
-                        {pdfFile.name}
-                      </span>
-                      <span style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', fontWeight: '600' }}>
-                        Ukuran: {(pdfFile.size / 1024).toFixed(1)} KB
-                      </span>
-                    </div>
-                  </div>
-                  <button 
-                    onClick={() => setPdfFile(null)}
-                    style={{ background: 'none', border: 'none', color: 'var(--accent-red)', cursor: 'pointer', fontSize: '0.78rem', fontWeight: '800', padding: '6px 12px', borderRadius: '8px', transition: 'all 0.2s' }}
-                    onMouseEnter={e => e.currentTarget.style.backgroundColor = 'var(--accent-red-glow)'}
-                    onMouseLeave={e => e.currentTarget.style.backgroundColor = 'transparent'}
-                  >
-                    Hapus File
-                  </button>
                 </div>
-              )}
+                
+                {/* Informative Tip */}
+                <div style={{ marginTop: '10px', padding: '14px 18px', backgroundColor: 'var(--accent-gold-glow)', border: '1px solid rgba(245, 158, 11, 0.2)', borderRadius: '12px', maxWidth: '550px', fontSize: '0.78rem', color: 'var(--text-primary)', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                  <span style={{ fontSize: '1.1rem' }}>💡</span>
+                  <p style={{ lineHeight: '1.5', textAlign: 'left', margin: 0 }}>
+                    <b>Mengapa memakan waktu?</b> Model AI <i>Gemma-4-31B-IT</i> mengevaluasi draf proposal Anda secara mendalam menggunakan peninjauan multi-aspek (MVP, Kelayakan Finansial, Validasi Pasar, Keselarasan SDGs). Proses berpikir AI memerlukan waktu beberapa saat demi memberikan feedback kritis dan nilai akurat layaknya juri nasional.
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <div className="glass-panel" style={{ padding: '28px', display: 'flex', flexDirection: 'column', gap: '20px', background: 'rgba(255, 255, 255, 0.9)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
+                  <span style={{ fontSize: '0.9rem', fontWeight: '800', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <Upload size={20} color="var(--accent-blue)" /> Unggah Berkas Proposal Bisnis
+                  </span>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 'bold', backgroundColor: 'var(--bg-tertiary)', padding: '4px 10px', borderRadius: '20px' }}>Format File Wajib: PDF (.pdf)</span>
+                </div>
 
-              <button 
-                className="glow-button-green" 
-                onClick={handleEvaluate} 
-                disabled={loading} 
-                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', alignSelf: 'flex-start', padding: '14px 28px', fontSize: '0.9rem', borderRadius: '12px' }}
-              >
-                {loading ? (
-                  <>
-                    <RefreshCw className="animate-spin" size={18} />
-                    <span>Mengekstraksi & Menganalisis PDF...</span>
-                  </>
-                ) : (
-                  <>
-                    <Activity size={18} />
-                    <span>Mulai Analisis Proposal</span>
-                  </>
+                {/* Drag and Drop Zone */}
+                <div 
+                  onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
+                  onDragLeave={() => setIsDragging(false)}
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    setIsDragging(false);
+                    const file = e.dataTransfer.files[0];
+                    if (file && file.type === 'application/pdf') {
+                      setPdfFile(file);
+                    } else {
+                      alert('Hanya mendukung berkas berformat PDF.');
+                    }
+                  }}
+                  style={{
+                    border: `2px dashed ${isDragging ? 'var(--accent-blue)' : '#818cf8'}`,
+                    background: isDragging ? 'var(--accent-blue-glow)' : 'rgba(99, 102, 241, 0.02)',
+                    borderRadius: '16px',
+                    padding: '45px 20px',
+                    textAlign: 'center',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    position: 'relative',
+                    boxShadow: 'inset 0 2px 8px rgba(99, 102, 241, 0.02)'
+                  }}
+                  onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--accent-blue)'}
+                  onMouseLeave={e => { if(!isDragging) e.currentTarget.style.borderColor = '#818cf8'; }}
+                >
+                  <input 
+                    type="file" 
+                    id="pdf-file-input" 
+                    accept=".pdf" 
+                    onChange={(e) => {
+                      const file = e.target.files[0];
+                      if (file) setPdfFile(file);
+                    }}
+                    style={{ display: 'none' }} 
+                  />
+                  
+                  <label htmlFor="pdf-file-input" style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '14px' }}>
+                    <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '2px solid var(--border-color)', boxShadow: '0 6px 15px rgba(99, 102, 241, 0.05)' }}>
+                      <Upload size={26} color="var(--accent-blue)" />
+                    </div>
+                    
+                    <div>
+                      <span style={{ fontSize: '0.9rem', fontWeight: '800', display: 'block', color: 'var(--text-primary)' }}>
+                        Seret & lepas berkas PDF proposal di sini
+                      </span>
+                      <span style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', marginTop: '6px', display: 'block' }}>
+                        atau <span style={{ color: 'var(--accent-blue)', textDecoration: 'underline', fontWeight: 'bold' }}>klik untuk cari berkas</span> dari komputer Anda
+                      </span>
+                    </div>
+                  </label>
+                </div>
+
+                {/* Selected PDF file summary card */}
+                {pdfFile && (
+                  <div style={{ padding: '14px 18px', backgroundColor: 'var(--accent-blue-glow)', border: '1px solid rgba(99, 102, 241, 0.25)', borderRadius: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', boxShadow: '0 4px 12px rgba(99, 102, 241, 0.05)' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <div style={{ width: '36px', height: '36px', borderRadius: '8px', backgroundColor: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid var(--border-color)' }}>
+                        <FileCheck size={20} color="var(--accent-green)" />
+                      </div>
+                      <div>
+                        <span style={{ fontSize: '0.85rem', fontWeight: '800', display: 'block', color: 'var(--text-primary)', maxWidth: '280px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={pdfFile.name}>
+                          {pdfFile.name}
+                        </span>
+                        <span style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', fontWeight: '600' }}>
+                          Ukuran: {(pdfFile.size / 1024).toFixed(1)} KB
+                        </span>
+                      </div>
+                    </div>
+                    <button 
+                      onClick={() => setPdfFile(null)}
+                      style={{ background: 'none', border: 'none', color: 'var(--accent-red)', cursor: 'pointer', fontSize: '0.78rem', fontWeight: '800', padding: '6px 12px', borderRadius: '8px', transition: 'all 0.2s' }}
+                      onMouseEnter={e => e.currentTarget.style.backgroundColor = 'var(--accent-red-glow)'}
+                      onMouseLeave={e => e.currentTarget.style.backgroundColor = 'transparent'}
+                    >
+                      Hapus File
+                    </button>
+                  </div>
                 )}
-              </button>
+
+                <button 
+                  className="glow-button-green" 
+                  onClick={handleEvaluate} 
+                  disabled={loading} 
+                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', alignSelf: 'flex-start', padding: '14px 28px', fontSize: '0.9rem', borderRadius: '12px' }}
+                >
+                  <Activity size={18} />
+                  <span>Mulai Analisis Proposal</span>
+                </button>
+              </div>
+            )}
             </div>
           </div>
         )}
