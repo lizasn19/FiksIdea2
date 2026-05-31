@@ -60,7 +60,8 @@ export default function Home() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || 'Terjadi kesalahan sistem.');
+        const detailsStr = errorData.details ? `\nDetail: ${errorData.details}` : '';
+        throw new Error((errorData.error || 'Terjadi kesalahan sistem.') + detailsStr);
       }
 
       const result = await response.json();
