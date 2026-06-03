@@ -256,20 +256,35 @@ export async function POST(req) {
       systemInstruction: SYSTEM_INSTRUCTIONS
     });
 
-
-
     const prompt = `Berikut adalah proposal bisnis dari siswa:
 ----------------------------------------
 ${proposalText}
 ----------------------------------------
 Analisis proposal ini secara objektif dan detail. Kembalikan tanggapan hanya dalam format JSON sesuai skema.`;
 
-    const result = await model.generateContent({
-      contents: [{ role: 'user', parts: [{ text: prompt }] }],
-      generationConfig: {
-        responseMimeType: 'application/json'
-      }
-    });
+    let result;
+    try {
+      result = await model.generateContent({
+        contents: [{ role: 'user', parts: [{ text: prompt }] }],
+        generationConfig: {
+          responseMimeType: 'application/json'
+        }
+      });
+    } catch (apiError) {
+      console.warn("Gagal menggunakan gemma-4-31b-it, mencoba fallback ke gemini-1.5-flash...", apiError);
+      
+      const fallbackModel = ai.getGenerativeModel({
+        model: 'gemini-1.5-flash',
+        systemInstruction: SYSTEM_INSTRUCTIONS
+      });
+      
+      result = await fallbackModel.generateContent({
+        contents: [{ role: 'user', parts: [{ text: prompt }] }],
+        generationConfig: {
+          responseMimeType: 'application/json'
+        }
+      });
+    }
 
     const responseText = result.response.text();
     let jsonResult;
