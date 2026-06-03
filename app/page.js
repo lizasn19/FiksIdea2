@@ -1002,7 +1002,14 @@ export default function Home() {
                   {/* SDGs Goal Chips */}
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '14px' }}>
                     {currentPillar.sdgs.map((sdg) => {
-                      const status = sdg.status || 'inactive';
+                      const isMatched = evaluation.extractedSDGs.selectedSDGId === sdg.id;
+                      let status = sdg.status || 'inactive';
+                      if (isMatched) {
+                        status = 'highlight';
+                      } else if (status === 'highlight') {
+                        status = 'active';
+                      }
+                      
                       let bg = '#f1f5f9';
                       let border = '1px solid #cbd5e1';
                       let textCol = '#64748b';

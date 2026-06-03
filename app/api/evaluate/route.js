@@ -315,8 +315,8 @@ function generateMockAnalysis(text) {
   let isGame = lowercase.includes('game') || lowercase.includes('permainan') || lowercase.includes('sejarah') || lowercase.includes('budaya');
 
   let title = "Ide Bisnis Kustom";
-  let score = 42;
-  let status = "TOLAK / PERBAIKAN DULU";
+  let score = 74;
+  let status = "DIPERLUKAN PERBAIKAN";
 
   if (isRiceDetector) {
     title = "Sensor Pendeteksi Kualitas Gabah Berbasis IoT (RiceGuard)";
@@ -344,7 +344,7 @@ function generateMockAnalysis(text) {
         ? "Hanya menampilkan gambar coretan karakter di kertas buram dan logo rancangan game tanpa alur."
         : "Menjelaskan konsep ide digital secara tekstual, namun visualisasi purwarupa atau screenshoot sistem belum terlampir secara rapi.",
       ideal: "Menampilkan desain antarmuka (UI/UX Mockup) yang rapi, modern, konsisten dalam warna/tipografi, fungsional, dilengkapi bagan alir (flowchart) navigasi pengguna serta video rekaman layar (screencast) demonstrasi berdurasi 1-2 menit di GDrive.",
-      checklist: isRiceDetector ? [true, true, true, false, false] : isGame ? [true, false, false, false, false] : [false, false, false, false, false],
+      checklist: isRiceDetector ? [true, true, true, false, false] : isGame ? [true, false, false, false, false] : [true, true, false, false, false],
       bagus: [
         "Ide dan nama produk sudah terdefinisi dengan jelas",
         "Deskripsi fungsi produk mudah dipahami pembaca",
@@ -357,7 +357,9 @@ function generateMockAnalysis(text) {
         "Tidak ada testimoni atau feedback dari calon pengguna",
         "Tidak ada blueprint atau diagram teknis cara kerja produk"
       ],
-      rekomendasi: "Segera dokumentasikan bukti nyata: (1) Buat mockup di Figma/Canva dan lampirkan screenshot-nya. (2) Foto proses pembuatan produk, walau masih dalam tahap awal. (3) Hubungi minimal 5 calon pengguna dan minta feedback tertulis untuk dijadikan lampiran. (4) Buat halaman landing page sederhana dan lampirkan link-nya sebagai bukti validasi awal."
+      rekomendasi: isGame
+        ? "Segera dokumentasikan bukti nyata: (1) Buat mockup di Figma/Canva dan lampirkan screenshot-nya. (2) Foto proses pembuatan produk, walau masih dalam tahap awal. (3) Hubungi minimal 5 calon pengguna dan minta feedback tertulis untuk dijadikan lampiran. (4) Buat halaman landing page sederhana dan lampirkan link-nya sebagai bukti validasi awal."
+        : "Segera dokumentasikan bukti nyata: (1) Buat mockup di Figma/Canva dan lampirkan screenshot-nya. (2) Foto proses pembuatan produk, walau masih dalam tahap awal. (3) Hubungi minimal 5 calon pengguna dan minta feedback tertulis untuk dijadikan lampiran. (4) Buat halaman landing page sederhana dan lampirkan link-nya sebagai bukti validasi awal."
     },
     market: {
       score: score > 85 ? 20 : 11,
@@ -366,7 +368,7 @@ function generateMockAnalysis(text) {
         ? "Telah menguji produk bioplastik ke 25 pengrajin lokal dan melampirkan grafik kepuasan serta hasil survei WTP harga jual."
         : "Menyatakan telah melakukan pengujian produk ke beberapa keluarga terdekat dan teman sekelas tanpa melampirkan grafik umpan balik kuantitatif.",
       ideal: "Pengujian langsung ke minimal 15-30 orang target pengguna riil secara objektif, menyajikan tabel feedback loop (Sebelum vs Sesudah perbaikan konkret), serta menetapkan harga jual rasional berbasis kurva Willingness to Pay (WTP).",
-      checklist: isUpcycle ? [true, true, true, true, false] : [false, false, false, false, false],
+      checklist: isUpcycle ? [true, true, true, true, false] : [true, true, true, false, false],
       bagus: [
         "Identifikasi segmen target pasar sudah ada dan spesifik",
         "Pemahaman masalah pelanggan cukup baik secara naratif",
@@ -387,7 +389,7 @@ function generateMockAnalysis(text) {
         ? "Mencantumkan perhitungan modal dasar, tetapi mengabaikan biaya sewa server bulanan, internet tim, dan penyusutan aset laptop kerja."
         : "Menyebutkan biaya operasional Rp0 karena menggunakan laptop pribadi dan wifi sekolah, serta proyeksi keuntungan naik 500% di bulan kedua.",
       ideal: "Menyusun struktur paket harga langganan atau produk yang logis, memaparkan rincian biaya operasional bulanan riil (server, internet, transportasi, penyusutan laptop), dan menghitung Break-Even Point (BEP Unit & BEP Rupiah) dengan grafik proyeksi 6 bulan yang realistis.",
-      checklist: [false, false, false, false, false],
+      checklist: lowercase.includes('keuangan') ? [true, true, true, false, false] : [true, true, false, false, false],
       bagus: [
         "Harga jual produk sudah ditetapkan dengan angka yang spesifik",
         "Margin keuntungan per unit positif (revenue > COGS per unit)",
@@ -409,14 +411,14 @@ function generateMockAnalysis(text) {
         ? "Melampirkan Gantt Chart pembagian tugas mingguan dan bukti komunikasi WhatsApp awal dengan koperasi petani gabah lokal."
         : "Menjelaskan rencana promosi klise 'mulut ke mulut dan lewat medsos', tanpa melampirkan pembagian jadwal kerja mingguan (Gantt chart) atau bukti kemitraan riil.",
       ideal: "Gantt Chart mingguan yang memisahkan jam sekolah dengan kerja bisnis, pembagian job desk personal tim, draf poster promosi visual medsos spesifik target, bukti dokumentasi/chat dengan penyuplai bahan baku, dan foto kolaborasi lapangan dengan mitra lokal.",
-      checklist: isRiceDetector ? [true, true, true, false, false] : [false, false, false, false, false],
+      checklist: isRiceDetector ? [true, true, true, false, false] : [true, true, false, false, false],
       bagus: [
         "Struktur tim sudah disebutkan beserta nama masing-masing anggota",
         "Kegiatan-kegiatan utama sudah teridentifikasi secara umum",
         "Ada rencana penggunaan media sosial sebagai kanal pemasaran"
       ],
       perbaiki: [
-        "Gantt Chart hanya per bulan (tidak per minggu) and tidak ada deliverable per milestone",
+        "Gantt Chart hanya per bulan (tidak per minggu) dan tidak ada deliverable per milestone",
         "Strategi digital marketing hanya 'pakai Instagram/TikTok' tanpa rencana konten, target, atau anggaran",
         "Tidak ada rencana kolaborasi dengan pihak eksternal (mitra, sponsor, komunitas)",
         "Tidak ada KPI terukur — tidak ada target follower, konversi, atau revenue per periode",
@@ -429,17 +431,15 @@ function generateMockAnalysis(text) {
         ? "Sangat kuat di pilar Ekonomi Hijau (upcycling limbah cangkang udang) dan Ekonomi Digital (sistem e-commerce pasokan)."
         : isRiceDetector
         ? "Linear dengan pilar Ekonomi Digital (sensor IoT) dan Ekonomi Hijau (mengurangi gagal panen padi sehingga menekan food waste)."
-        : "Target omzet Rp 900.000/bulan dari 6 unit masih sangat kecil dan tidak menunjukkan skalabilitas. Tidak ada rencana scale-up: bagaimana meningkatkan dari 6 ke 50 unit/bulan? Jelaskan strategi penetrasi pasar terukur dengan target market share realistis dalam 12 bulan.",
+        : "Cocok dengan Ekonomi Kreatif (game budaya) dan Ekonomi Digital, namun kontribusi terhadap Ekonomi Hijau (keberlanjutan lingkungan) masih lemah.",
       sdgAdvice: isUpcycle
         ? "Mendukung penuh SDG 12 (Konsumsi & Produksi Bertanggung Jawab) dan SDG 14 (Menjaga Ekosistem Laut dengan mengurangi sampah cangkang). Tonjolkan logo SDGs ini di halaman awal proposal."
-        : isRiceDetector
-        ? "Sesuai dengan SDG 9 (Inovasi Industri) dan SDG 2 (Tanpa Kelaparan / Ketahanan Pangan). Sebutkan secara tertulis kontribusi ini pada Bab Pendahuluan proposal."
-        : "Integrasi SDGs masih bersifat deklaratif — hanya menyebutkan 'mendukung SDG 12' tanpa indikator kuantitatif. Juri mengharapkan Theory of Change yang menghubungkan aktivitas bisnis dengan dampak SDGs secara logis: misal '500 kg limbah tekstil tereduksi/kuartal'.",
-      riskMitigation: "Proposal tidak membahas risiko sama sekali. Buat matriks risiko sederhana dengan minimal 5 risiko utama dan strategi mitigasinya: risiko produk tidak laku (pivot strategy), bahan baku naik harga (supplier alternatif), kompetitor baru masuk (diferensiasi value proposition)."
+        : "Sesuai dengan SDG 9 (Inovasi Industri) dan SDG 2 (Tanpa Kelaparan / Ketahanan Pangan). Sebutkan secara tertulis kontribusi ini pada Bab Pendahuluan proposal.",
+      riskMitigation: "Rencana mitigasi risiko teknis (misal cadangan server mati, kegagalan sensor) harus dituliskan dalam tabel matriks risiko. Jadwalkan juga rencana pendaftaran Hak Cipta (HAKI) atau merk dagang pada roadmap bulan ke-4 setelah kompetisi."
     },
     summaryAdvice: isRiceDetector || isUpcycle
       ? `Ide bisnis "${title}" sangat berpotensi. Fokus perbaikan Anda saat ini adalah melengkapi visualisasi bukti sinergi mitra lapangan berupa foto dokumentasi fisik kegiatan, serta merinci roadmap perlindungan HAKI produk.`
-      : `FIKSI 2026, dokumen ini masih berada pada level tugas sekolah biasa dan belum memenuhi standar kompetisi nasional. Kondisi ini terlihat dari ketiadaan validasi pasar berbasis data, absennya MVP yang fungsional, dan perencanaan implementasi yang masih sangat umum. Tim perlu bergeser dari sekadar 'berinovasi' menjadi 'membuktikan kelayakan bisnis dengan data nyata'.`,
+      : `Proposal "${title}" memerlukan penguatan di bagian visual purwarupa digital (mockup figma), survei pasar yang lebih objektif (>15 orang), dan pembagian waktu operasional siswa agar tidak mengabaikan sekolah. Gunakan alat simulasi di bawah untuk memperbaikinya.`,
     extractedFinance: isRiceDetector ? {
       serverCost: 150000,
       internetCost: 100000,
