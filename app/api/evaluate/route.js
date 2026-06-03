@@ -59,6 +59,9 @@ Format Skema Keluaran JSON:
     "status": string,
     "realita": string,
     "ideal": string,
+    "checklist": [boolean, boolean, boolean, boolean, boolean] (evaluasi terhadap 5 kriteria MVP sesuai checklist Kriteria Penilaian Juri di kiri screen),
+    "bagus": [string] (list poin positif, minimal 2-3),
+    "perbaiki": [string] (list poin perbaikan, minimal 2-3),
     "rekomendasi": string
   },
   "market": {
@@ -66,6 +69,9 @@ Format Skema Keluaran JSON:
     "status": string,
     "realita": string,
     "ideal": string,
+    "checklist": [boolean, boolean, boolean, boolean, boolean] (evaluasi terhadap 5 kriteria pasar),
+    "bagus": [string],
+    "perbaiki": [string],
     "rekomendasi": string
   },
   "finance": {
@@ -73,6 +79,9 @@ Format Skema Keluaran JSON:
     "status": string,
     "realita": string,
     "ideal": string,
+    "checklist": [boolean, boolean, boolean, boolean, boolean] (evaluasi terhadap 5 kriteria kelayakan),
+    "bagus": [string],
+    "perbaiki": [string],
     "rekomendasi": string
   },
   "implementation": {
@@ -80,6 +89,9 @@ Format Skema Keluaran JSON:
     "status": string,
     "realita": string,
     "ideal": string,
+    "checklist": [boolean, boolean, boolean, boolean, boolean] (evaluasi terhadap 5 kriteria implementasi),
+    "bagus": [string],
+    "perbaiki": [string],
     "rekomendasi": string
   },
   "sustainability": {
@@ -324,44 +336,95 @@ function generateMockAnalysis(text) {
     overallScore: score,
     status: status,
     mvp: {
-      score: score > 80 ? 85 : 60,
-      status: score > 80 ? "🟢 BAGUS (JUARA)" : "🔴 JELEK (DITOLAK)",
+      score: score > 80 ? 25 : 10,
+      status: score > 80 ? "BAGUS" : "KURANG",
       realita: isRiceDetector 
         ? "Sudah melampirkan screenshot desain sirkuit sensor dan mockup antarmuka web monitoring." 
         : isGame 
         ? "Hanya menampilkan gambar coretan karakter di kertas buram dan logo rancangan game tanpa alur."
         : "Menjelaskan konsep ide digital secara tekstual, namun visualisasi purwarupa atau screenshoot sistem belum terlampir secara rapi.",
       ideal: "Menampilkan desain antarmuka (UI/UX Mockup) yang rapi, modern, konsisten dalam warna/tipografi, fungsional, dilengkapi bagan alir (flowchart) navigasi pengguna serta video rekaman layar (screencast) demonstrasi berdurasi 1-2 menit di GDrive.",
+      checklist: isRiceDetector ? [true, true, true, false, false] : isGame ? [true, false, false, false, false] : [true, true, false, false, false],
+      bagus: [
+        "Ide dan nama produk sudah terdefinisi dengan jelas",
+        "Deskripsi fungsi produk mudah dipahami pembaca",
+        "Target segmen pengguna sudah diidentifikasi"
+      ],
+      perbaiki: [
+        "Tidak ada foto, video, atau visual produk nyata sama sekali",
+        "Tidak ada prototipe fisik maupun mockup digital interaktif",
+        "Tidak ada data hasil uji coba atau percobaan awal",
+        "Tidak ada testimoni atau feedback dari calon pengguna",
+        "Tidak ada blueprint atau diagram teknis cara kerja produk"
+      ],
       rekomendasi: isGame
-        ? "Gunakan alat desainer antarmuka seperti Figma untuk menggambar mockup menu utama dan antarmuka permainan secara digital. Buat bagan navigasi flowchart dari menu mulai hingga akhir permainan."
-        : "Buat rekaman layar (screencast) berdurasi 1 menit menggunakan OBS/Loom yang memperlihatkan alur sistem bekerja real-time, lalu bagikan tautannya di GDrive dengan akses dibuka publik."
+        ? "Segera dokumentasikan bukti nyata: (1) Buat mockup di Figma/Canva dan lampirkan screenshot-nya. (2) Foto proses pembuatan produk, walau masih dalam tahap awal. (3) Hubungi minimal 5 calon pengguna dan minta feedback tertulis untuk dijadikan lampiran. (4) Buat halaman landing page sederhana dan lampirkan link-nya sebagai bukti validasi awal."
+        : "Segera dokumentasikan bukti nyata: (1) Buat mockup di Figma/Canva dan lampirkan screenshot-nya. (2) Foto proses pembuatan produk, walau masih dalam tahap awal. (3) Hubungi minimal 5 calon pengguna dan minta feedback tertulis untuk dijadikan lampiran. (4) Buat halaman landing page sederhana dan lampirkan link-nya sebagai bukti validasi awal."
     },
     market: {
-      score: score > 85 ? 90 : 65,
-      status: score > 85 ? "🟢 BAGUS (JUARA)" : "🔴 JELEK (DITOLAK)",
+      score: score > 85 ? 20 : 11,
+      status: score > 85 ? "BAGUS" : "CUKUP",
       realita: isUpcycle
         ? "Telah menguji produk bioplastik ke 25 pengrajin lokal dan melampirkan grafik kepuasan serta hasil survei WTP harga jual."
         : "Menyatakan telah melakukan pengujian produk ke beberapa keluarga terdekat dan teman sekelas tanpa melampirkan grafik umpan balik kuantitatif.",
       ideal: "Pengujian langsung ke minimal 15-30 orang target pengguna riil secara objektif, menyajikan tabel feedback loop (Sebelum vs Sesudah perbaikan konkret), serta menetapkan harga jual rasional berbasis kurva Willingness to Pay (WTP).",
-      rekomendasi: "Sebarkan kuesioner ke minimal 20 calon pelanggan di luar lingkaran pertemanan dekat. Rangkum masukannya dalam tabel Sebelum vs Sesudah. Jalankan kalkulator WTP di dashboard ini untuk merasionalkan harga jual Anda."
+      checklist: isUpcycle ? [true, true, true, true, false] : [true, true, true, false, false],
+      bagus: [
+        "Identifikasi segmen target pasar sudah ada dan spesifik",
+        "Pemahaman masalah pelanggan cukup baik secara naratif",
+        "Sudah ada survei awal (walau jumlah responden masih sedikit)"
+      ],
+      perbaiki: [
+        "Survei hanya dilakukan kepada 10 responden (minimum juri: 30)",
+        "Tidak ada wawancara mendalam (in-depth interview) yang terdokumentasi",
+        "Analisis kompetitor tidak terstruktur — hanya menyebutkan nama tanpa komparasi fitur/harga",
+        "Tidak ada bukti pre-order, waiting list, atau minat nyata dari calon pelanggan"
+      ],
+      rekomendasi: "Perkuat validasi pasar dengan: (1) Perluas survei ke minimal 30 responden target pasar dengan menggunakan Google Form — sertakan link dan data rekapitulasi di lampiran. (2) Lakukan dan rekam wawancara mendalam dengan 3–5 calon pelanggan potensial. (3) Buat tabel perbandingan kompetitor (nama, harga, fitur, kelebihan/kekurangan vs produk Anda). (4) Buka pre-order simbolis atau daftar waiting list untuk membuktikan demand nyata."
     },
     finance: {
-      score: score > 80 ? 85 : 55,
-      status: score > 80 ? "🟢 BAGUS (JUARA)" : "🔴 JELEK (DITOLAK)",
+      score: score > 80 ? 22 : 13,
+      status: score > 80 ? "BAGUS" : "CUKUP",
       realita: lowercase.includes('keuangan') || lowercase.includes('bep')
         ? "Mencantumkan perhitungan modal dasar, tetapi mengabaikan biaya sewa server bulanan, internet tim, dan penyusutan aset laptop kerja."
         : "Menyebutkan biaya operasional Rp0 karena menggunakan laptop pribadi dan wifi sekolah, serta proyeksi keuntungan naik 500% di bulan kedua.",
       ideal: "Menyusun struktur paket harga langganan atau produk yang logis, memaparkan rincian biaya operasional bulanan riil (server, internet, transportasi, penyusutan laptop), dan menghitung Break-Even Point (BEP Unit & BEP Rupiah) dengan grafik proyeksi 6 bulan yang realistis.",
-      rekomendasi: "Jalankan simulasi finansial menggunakan Kalkulator BEP di bawah. Masukkan biaya penyusutan laptop (misal Rp100.000/bulan) dan sewa hosting server web bulanan agar keuntungan bersih dihitung jujur di mata juri."
+      checklist: lowercase.includes('keuangan') ? [true, true, true, false, false] : [true, true, false, false, false],
+      bagus: [
+        "Harga jual produk sudah ditetapkan dengan angka yang spesifik",
+        "Margin keuntungan per unit positif (revenue > COGS per unit)",
+        "Sudah ada perhitungan BEP walaupun masih sederhana",
+        "Target produksi bulanan sudah ditentukan"
+      ],
+      perbaiki: [
+        "Biaya tetap (server, listrik, peralatan) tidak dicantumkan — BEP jadi tidak realistis",
+        "Proyeksi keuangan hanya untuk 1 bulan, bukan 12 bulan",
+        "Tidak ada analisis risiko — tidak ada matriks risiko maupun strategi mitigasi",
+        "Tidak ada skenario keuangan alternatif (best-case / worst-case)"
+      ],
+      rekomendasi: "Perbaiki kelayakan finansial: (1) Inventarisasi SEMUA biaya awal dan operasional, termasuk packaging, listrik, transportasi, dan biaya promosi — masukkan sebagai biaya tetap amortisasi. (2) Buat proyeksi keuangan 12 bulan dengan asumsi pertumbuhan 10%/bulan. (3) Tambahkan matriks risiko dengan minimal 5 risiko utama beserta strategi mitigasinya. (4) Buat dua skenario: optimis (target tercapai 100%) dan pesimis (target hanya 50%)."
     },
     implementation: {
-      score: score > 80 ? 88 : 70,
-      status: score > 80 ? "🟢 BAGUS (JUARA)" : "🔴 JELEK (DITOLAK)",
+      score: score > 80 ? 18 : 8,
+      status: score > 80 ? "BAGUS" : "KURANG",
       realita: isRiceDetector
         ? "Melampirkan Gantt Chart pembagian tugas mingguan dan bukti komunikasi WhatsApp awal dengan koperasi petani gabah lokal."
         : "Menjelaskan rencana promosi klise 'mulut ke mulut dan lewat medsos', tanpa melampirkan pembagian jadwal kerja mingguan (Gantt chart) atau bukti kemitraan riil.",
       ideal: "Gantt Chart mingguan yang memisahkan jam sekolah dengan kerja bisnis, pembagian job desk personal tim, draf poster promosi visual medsos spesifik target, bukti dokumentasi/chat dengan penyuplai bahan baku, dan foto kolaborasi lapangan dengan mitra lokal.",
-      rekomendasi: "Gunakan generator jadwal Gantt Chart untuk membagi tugas mingguan. Lampirkan tangkapan layar (screenshot) chat pemesanan aset atau foto bersama perwakilan pedagang pasar / petani setempat sebagai bukti sinergi operasional lapangan."
+      checklist: isRiceDetector ? [true, true, true, false, false] : [true, true, false, false, false],
+      bagus: [
+        "Struktur tim sudah disebutkan beserta nama masing-masing anggota",
+        "Kegiatan-kegiatan utama sudah teridentifikasi secara umum",
+        "Ada rencana penggunaan media sosial sebagai kanal pemasaran"
+      ],
+      perbaiki: [
+        "Gantt Chart hanya per bulan (tidak per minggu) dan tidak ada deliverable per milestone",
+        "Strategi digital marketing hanya 'pakai Instagram/TikTok' tanpa rencana konten, target, atau anggaran",
+        "Tidak ada rencana kolaborasi dengan pihak eksternal (mitra, sponsor, komunitas)",
+        "Tidak ada KPI terukur — tidak ada target follower, konversi, atau revenue per periode",
+        "Pembagian tugas tidak mencerminkan kompetensi spesifik anggota"
+      ],
+      rekomendasi: "Perkuat rencana implementasi: (1) Buat Gantt Chart per minggu dengan sub-task dan deliverable spesifik. (2) Rancang konten kalender media sosial untuk 3 bulan pertama beserta target engagement-nya. (3) Identifikasi dan hubungi minimal 2 calon mitra/kolaborator eksternal. (4) Tentukan KPI SMART (Specific, Measurable, Achievable, Relevant, Time-bound) per bulan."
     },
     sustainability: {
       pillarMatch: isUpcycle 
