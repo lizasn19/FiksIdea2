@@ -12,17 +12,9 @@ Bahasa tanggapan harus dalam Bahasa Indonesia yang edukatif, memotivasi, namun t
 PENTING - KETENTUAN DETAIL & ACUAN DOKUMEN:
 Setiap teks jawaban evaluasi Anda dalam JSON (pada kolom "realita", "ideal", "rekomendasi", "sustainability", dan "summaryAdvice") WAJIB ditulis dengan sangat detail, komprehensif, mendalam (minimal 4-6 kalimat panjang per bagian), dan memberikan contoh/saran konkret. Anda harus secara eksplisit mengacu pada panduan FIKSI Tahap 2 dan template proyeksi keuangan dari berkas yang diberikan (misalnya menyebutkan strategi Asset-Light secara nyata, rumus HPP/BEP yang presisi, audit konsistensi matematika tabel laba bersih bulanan vs total tahunan, visualisasi 3-Pilar Validasi Pasar: Fact, Insight, Action, dan batas penggunaan AI maksimal 30%). Jangan memberikan jawaban yang singkat, dangkal, atau sekadar template generik.
 
-PENTING - KETENTUAN SKOR (SCORING RULES):
-Anda wajib memberikan nilai (score) sesuai bobot masing-masing aspek berikut (JANGAN menggunakan skala 0-100 untuk tiap aspek, gunakan bobot maksimalnya):
-1. Purwarupa Produk/Jasa (MVP): Nilai skor wajib dalam rentang integer 0 hingga 30 (Bobot maksimal 30%).
-2. Validasi Pasar: Nilai skor wajib dalam rentang integer 0 hingga 25 (Bobot maksimal 25%).
-3. Kelayakan Usaha & Finansial: Nilai skor wajib dalam rentang integer 0 hingga 25 (Bobot maksimal 25%).
-4. Rencana Implementasi & Tema: Nilai skor wajib dalam rentang integer 0 hingga 20 (Bobot maksimal 20%).
-5. overallScore: Harus merupakan penjumlahan dari keempat nilai di atas (mvp.score + market.score + finance.score + implementation.score), sehingga menghasilkan nilai total dengan skala maksimal 100.
-
 Evaluasi dilakukan berdasarkan 4 Komponen Utama dengan kriteria sangat spesifik sesuai Panduan FIKSI 2026:
 
-1. Purwarupa Produk/Jasa (MVP) (Bobot maksimal 30%):
+1. Purwarupa Produk/Jasa (MVP) (Bobot 30%):
    - Kategori Produk/Jasa harus jelas bentuk MVP-nya:
      - Produk Fisik (Fashion/Kriya/Kuliner): Harus berupa Low-Fidelity prototype menggunakan bahan murah/upcycled (misal: kain blacu murah untuk pola baju, tanah liat biasa untuk cetakan kriya, atau peralatan dapur rumah sendiri untuk formula kuliner baru) dengan alur proses produksi yang jelas dan terdokumentasi (foto/render).
      - Produk Digital: Harus berupa Interactive Mockup menggunakan aplikasi desain gratisan seperti Figma atau Canva dengan alur navigasi tombol yang bisa diklik. Bukan sekadar coretan kertas kasar atau gambar logo saja.
@@ -31,7 +23,7 @@ Evaluasi dilakukan berdasarkan 4 Komponen Utama dengan kriteria sangat spesifik 
    - Harus membuktikan fungsionalitas (apakah produk berfungsi baik).
    - Harus mencantumkan demo interaktif berupa video rekaman layar (screencast) demonstrasi berdurasi 1-2 menit di GDrive dengan akses publik dibagikan. Jika hanya melampirkan slide presentasi PPT statis atau link dikunci = JELEK (DITOLAK).
 
-2. Validasi Pasar (Bobot maksimal 25%):
+2. Validasi Pasar (Bobot 25%):
    - Pengujian target pengguna minimal ke 15-30 orang responden objektif. Jika 100% responden adalah teman sekelas atau keluarga sendiri, nilai validasi akan jatuh karena bias tinggi. Profil responden harus mewakili target demografi pasar nyata (BMC).
    - Penyusunan data validasi pasar di proposal WAJIB menggunakan "Struktur Penulisan 3 Pilar" di bawah setiap grafik/diagram:
      1. The Fact (Fakta): Apa angka kuantitatif yang tertera? (Misal: "78% dari 100 responden menyatakan...")
@@ -41,7 +33,7 @@ Evaluasi dilakukan berdasarkan 4 Komponen Utama dengan kriteria sangat spesifik 
    - Tunjukkan poin plus jika ada bukti otentik seperti waiting list, komitmen Pre-Order (PO), atau surat minat kerjasama (Letter of Intent - LoI) dari calon mitra/pembeli besar.
    - Peringatan Batas AI: Evaluasi konten teks proposal. Sesuai aturan FIKSI 2026, kandungan teks buatan AI (ChatGPT/Gemini dll) maksimal hanya boleh 30% dari keseluruhan proposal. Berikan saran jika teks terasa terlalu generik hasil generate AI.
 
-3. Kelayakan Usaha & Finansial (Bobot maksimal 25%):
+3. Kelayakan Usaha & Finansial (Bobot 25%):
    - Strategi Operasional: Harus menerapkan "Asset-Light Strategy" agar realistis dijalankan anak SMA dengan modal minim. Contoh: sistem bagi hasil sewa dapur/maklon kuliner dengan katering lokal, maklon kosmetik, sistem borongan jahitan dengan penjahit/pengrajin lokal (tim membuat desain & pemasaran, mitra menjahit per unit), atau pemanfaatan ruang komputer/lab sekolah (dengan izin resmi kepala sekolah).
    - Struktur Biaya (Cost Structure) harus jujur dan rinci. Tidak boleh berasumsi Rp0 untuk aset seperti laptop pribadi atau koneksi Wi-Fi. Harus dihitung biaya penyusutan laptop (depreciationCost), biaya internet bulanan tim (internetCost), biaya sewa server/hosting (serverCost) jika berbasis aplikasi, dan biaya pengiriman (transportCost).
    - Rumus Perhitungan Finansial harus diterapkan secara konsisten dan benar:
@@ -51,8 +43,8 @@ Evaluasi dilakukan berdasarkan 4 Komponen Utama dengan kriteria sangat spesifik 
    - Proyeksi volume produksi/penjualan bulanan harus realistis (tidak melonjak fantastis di awal) dan sebaiknya menunjukkan peningkatan pertumbuhan (growth) yang masuk akal tiap bulannya.
    - PENTING: Lakukan pemeriksaan konsistensi matematika tabel keuangan proposal. Seringkali terjadi kesalahan perhitungan di mana jumlah laba bersih bulanan jika ditambahkan selama 12 bulan tidak cocok dengan total laba bersih tahunan (seperti kesalahan pada contoh data CNTH 1). Pastikan semua hitungan matematis di proposal konsisten.
 
-4. Rencana Implementasi & Tema (Bobot maksimal 20%):
-   - Gantt Chart timeline direncanakan untuk 3-6 bulan ke depan, harus terperinci mingguan/bulanan, berurutan logis (Bulan 1 evaluasi formula produk berdasarkan uji coba, Bulan 2 MoU dengan mitra, Bulan 3 launching & pre-order), membagi tugas secara adil antar anggota tim (maksimal 2 orang SMA), dan memisahkan jam sekolah dengan waktu operasional bisnis.
+4. Rencana Implementasi & Tema (Bobot 20%):
+   - Jadwal kerja (Gantt Chart timeline) biasanya direncanakan untuk 3-6 bulan ke depan, harus terperinci mingguan/bulanan, berurutan logis (Bulan 1 evaluasi formula produk berdasarkan uji coba, Bulan 2 MoU dengan mitra, Bulan 3 launching & pre-order), membagi tugas secara adil antar anggota tim (maksimal 2 orang SMA), dan memisahkan jam sekolah dengan waktu operasional bisnis.
    - Harus memiliki korelasi kuat dengan Tema FIKSI 2026: Ekonomi Hijau (Green Economy) / Keberlanjutan Lingkungan (minim sampah, Zero Waste, circular economy, kemasan organik/biodegradable), Ekonomi Kreatif dengan Kearifan Lokal (Local Wisdom/budaya daerah), dan Ekonomi Digital.
    - Pemanfaatan Teknologi (Digital Integration): Usaha diakselerasi oleh teknologi digital (adopsi AI, otomatisasi pemasaran, efisiensi data, digital payment) untuk menekan biaya operasional.
    - Mitigasi Risiko: Harus mengidentifikasi risiko teknis dan risiko pasar, serta merancang rencana cadangan (Pivot/Contingency Plan) jika rencana utama gagal.
@@ -60,11 +52,11 @@ Evaluasi dilakukan berdasarkan 4 Komponen Utama dengan kriteria sangat spesifik 
 
 Format Skema Keluaran JSON:
 {
-  "overallScore": number (skala 0-100, hasil penjumlahan mvp.score + market.score + finance.score + implementation.score),
-  "status": string (gunakan "SIAP JUARA" jika overallScore >= 85, "DIPERLUKAN PERBAIKAN" jika 75 <= overallScore < 85, atau "KURANG" jika overallScore < 75),
+  "overallScore": number,
+  "status": string,
   "mvp": {
-    "score": number (skala integer 0-30, dengan nilai maksimal 30 sesuai bobot 30%),
-    "status": string (gunakan "BAGUS" jika score >= 22, "CUKUP" jika 15 <= score < 22, atau "KURANG" jika score < 15),
+    "score": number,
+    "status": string,
     "realita": string,
     "ideal": string,
     "checklist": [boolean, boolean, boolean, boolean, boolean] (evaluasi terhadap 5 kriteria MVP sesuai checklist Kriteria Penilaian Juri di kiri screen),
@@ -73,8 +65,8 @@ Format Skema Keluaran JSON:
     "rekomendasi": string
   },
   "market": {
-    "score": number (skala integer 0-25, dengan nilai maksimal 25 sesuai bobot 25%),
-    "status": string (gunakan "BAGUS" jika score >= 18, "CUKUP" jika 12 <= score < 18, atau "KURANG" jika score < 12),
+    "score": number,
+    "status": string,
     "realita": string,
     "ideal": string,
     "checklist": [boolean, boolean, boolean, boolean, boolean] (evaluasi terhadap 5 kriteria pasar),
@@ -83,8 +75,8 @@ Format Skema Keluaran JSON:
     "rekomendasi": string
   },
   "finance": {
-    "score": number (skala integer 0-25, dengan nilai maksimal 25 sesuai bobot 25%),
-    "status": string (gunakan "BAGUS" jika score >= 18, "CUKUP" jika 12 <= score < 18, atau "KURANG" jika score < 12),
+    "score": number,
+    "status": string,
     "realita": string,
     "ideal": string,
     "checklist": [boolean, boolean, boolean, boolean, boolean] (evaluasi terhadap 5 kriteria kelayakan),
@@ -93,8 +85,8 @@ Format Skema Keluaran JSON:
     "rekomendasi": string
   },
   "implementation": {
-    "score": number (skala integer 0-20, dengan nilai maksimal 20 sesuai bobot 20%),
-    "status": string (gunakan "BAGUS" jika score >= 15, "CUKUP" jika 10 <= score < 15, atau "KURANG" jika score < 10),
+    "score": number,
+    "status": string,
     "realita": string,
     "ideal": string,
     "checklist": [boolean, boolean, boolean, boolean, boolean] (evaluasi terhadap 5 kriteria implementasi),
@@ -270,43 +262,12 @@ ${proposalText}
 ----------------------------------------
 Analisis proposal ini secara objektif dan detail. Kembalikan tanggapan hanya dalam format JSON sesuai skema.`;
 
-    let result;
-    try {
-      result = await model.generateContent({
-        contents: [{ role: 'user', parts: [{ text: prompt }] }],
-        generationConfig: {
-          responseMimeType: 'application/json'
-        }
-      });
-    } catch (apiError) {
-      console.warn("Gagal menggunakan gemma-4-31b-it, mencoba fallback ke gemma-2-27b-it...", apiError);
-      try {
-        const fallbackModel = ai.getGenerativeModel({
-          model: 'gemma-2-27b-it',
-          systemInstruction: SYSTEM_INSTRUCTIONS
-        });
-        
-        result = await fallbackModel.generateContent({
-          contents: [{ role: 'user', parts: [{ text: prompt }] }],
-          generationConfig: {
-            responseMimeType: 'application/json'
-          }
-        });
-      } catch (fallbackError) {
-        console.warn("Gagal menggunakan gemma-2-27b-it, mencoba fallback ke gemma-2-9b-it...", fallbackError);
-        const fallbackModel2 = ai.getGenerativeModel({
-          model: 'gemma-2-9b-it',
-          systemInstruction: SYSTEM_INSTRUCTIONS
-        });
-        
-        result = await fallbackModel2.generateContent({
-          contents: [{ role: 'user', parts: [{ text: prompt }] }],
-          generationConfig: {
-            responseMimeType: 'application/json'
-          }
-        });
+    const result = await model.generateContent({
+      contents: [{ role: 'user', parts: [{ text: prompt }] }],
+      generationConfig: {
+        responseMimeType: 'application/json'
       }
-    }
+    });
 
     const responseText = result.response.text();
     let jsonResult;
