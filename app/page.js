@@ -33,6 +33,50 @@ import WTPChart from '../components/WTPChart';
 import GanttChartGenerator from '../components/GanttChartGenerator';
 import SDGsPillarMapper from '../components/SDGsPillarMapper';
 
+// Helper function to normalize evaluation scores if the AI returns them out of scale
+const normalizeEvaluationScores = (data) => {
+  if (!data) return data;
+  
+  const cloned = JSON.parse(JSON.stringify(data)); // Deep clone to avoid mutating nested objects
+  
+  const weights = {
+    mvp: 30,
+    market: 25,
+    finance: 25,
+    implementation: 20
+  };
+  
+  let hasChanges = false;
+  
+  for (const key of ['mvp', 'market', 'finance', 'implementation']) {
+    if (cloned[key] && typeof cloned[key].score === 'number') {
+      const maxScore = weights[key];
+      if (cloned[key].score > maxScore) {
+        cloned[key].score = Math.round((cloned[key].score * maxScore) / 100);
+        hasChanges = true;
+      }
+    }
+  }
+  
+  if (hasChanges && cloned.mvp && cloned.market && cloned.finance && cloned.implementation) {
+    cloned.overallScore = 
+      (cloned.mvp.score || 0) + 
+      (cloned.market.score || 0) + 
+      (cloned.finance.score || 0) + 
+      (cloned.implementation.score || 0);
+      
+    if (cloned.overallScore >= 85) {
+      cloned.status = "SIAP JUARA";
+    } else if (cloned.overallScore >= 75) {
+      cloned.status = "DIPERLUKAN PERBAIKAN";
+    } else {
+      cloned.status = "KURANG";
+    }
+  }
+  
+  return cloned;
+};
+
 export default function Home() {
   const [pdfFile, setPdfFile] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -41,7 +85,7 @@ export default function Home() {
   const [currentStep, setCurrentStep] = useState(1); // Steps: 1 (Input), 2 (MVP), 3 (Pasar), 4 (Finansial), 5 (Implementasi), 6 (Ringkasan)
   const [activePage, setActivePage] = useState(1); // Pages: 1 (MVP), 2 (Pasar), 3 (Finansial), 4 (Implementasi), 5 (Ringkasan)
   const [selectedPillar, setSelectedPillar] = useState('hijau'); // Selected pillar for SDGs map
-
+  
   const [alertMsg, setAlertMsg] = useState('');
   const [showGuide, setShowGuide] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -104,7 +148,7 @@ export default function Home() {
 
       // Delay step transition slightly so the user sees 100% completion
       setTimeout(() => {
-        setEvaluation(result);
+        setEvaluation(normalizeEvaluationScores(result));
         setActivePage(1);
         setCurrentStep(2); // Automatically advance to Step 2 (MVP analysis) once evaluated
       }, 600);
