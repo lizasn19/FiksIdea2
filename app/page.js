@@ -319,7 +319,7 @@ export default function Home() {
               const steps = [
                 { id: 1, name: 'Purwarupa Produk/Jasa', key: 'mvp', maxScore: 30, weight: 30, icon: Beaker },
                 { id: 2, name: 'Validasi Pasar', key: 'market', maxScore: 25, weight: 25, icon: FileText },
-                { id: 3, name: 'Analisis Kelayakan', key: 'finance', maxScore: 25, weight: 25, icon: TrendingUp },
+                { id: 3, name: 'Analisis Kelayakan Usaha', key: 'finance', maxScore: 25, weight: 25, icon: TrendingUp },
                 { id: 4, name: 'Rencana Implementasi', key: 'implementation', maxScore: 20, weight: 20, icon: Calendar },
                 { id: 5, name: 'Ringkasan', key: 'summary', maxScore: 100, weight: 100, icon: Award }
               ];
