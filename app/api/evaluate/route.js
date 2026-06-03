@@ -271,19 +271,33 @@ Analisis proposal ini secara objektif dan detail. Kembalikan tanggapan hanya dal
         }
       });
     } catch (apiError) {
-      console.warn("Gagal menggunakan gemma-4-31b-it, mencoba fallback ke gemini-1.5-flash...", apiError);
-      
-      const fallbackModel = ai.getGenerativeModel({
-        model: 'gemini-1.5-flash',
-        systemInstruction: SYSTEM_INSTRUCTIONS
-      });
-      
-      result = await fallbackModel.generateContent({
-        contents: [{ role: 'user', parts: [{ text: prompt }] }],
-        generationConfig: {
-          responseMimeType: 'application/json'
-        }
-      });
+      console.warn("Gagal menggunakan gemma-4-31b-it, mencoba fallback ke gemma-2-27b-it...", apiError);
+      try {
+        const fallbackModel = ai.getGenerativeModel({
+          model: 'gemma-2-27b-it',
+          systemInstruction: SYSTEM_INSTRUCTIONS
+        });
+        
+        result = await fallbackModel.generateContent({
+          contents: [{ role: 'user', parts: [{ text: prompt }] }],
+          generationConfig: {
+            responseMimeType: 'application/json'
+          }
+        });
+      } catch (fallbackError) {
+        console.warn("Gagal menggunakan gemma-2-27b-it, mencoba fallback ke gemma-2-9b-it...", fallbackError);
+        const fallbackModel2 = ai.getGenerativeModel({
+          model: 'gemma-2-9b-it',
+          systemInstruction: SYSTEM_INSTRUCTIONS
+        });
+        
+        result = await fallbackModel2.generateContent({
+          contents: [{ role: 'user', parts: [{ text: prompt }] }],
+          generationConfig: {
+            responseMimeType: 'application/json'
+          }
+        });
+      }
     }
 
     const responseText = result.response.text();
