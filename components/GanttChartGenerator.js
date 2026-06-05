@@ -30,7 +30,7 @@ export default function GanttChartGenerator({ initialData, reviewData }) {
           📅 Generator Gantt Chart & Pembagian Tugas (Job Desk)
         </h3>
         <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '4px', fontWeight: '500' }}>
-          Visualisasi jadwal kerja mingguan dan pembagian tugas yang diekstrak dari proposal Anda.
+          Visualisasi jadwal kerja mingguan dan pembagian tugas yang diekstrak dari proposal kamu.
         </p>
       </div>
 
@@ -83,7 +83,7 @@ export default function GanttChartGenerator({ initialData, reviewData }) {
       <div style={{ fontSize: '0.8rem', color: 'var(--text-primary)', display: 'flex', flexDirection: 'column', gap: '6px', borderLeft: '4px solid var(--accent-gold)', paddingLeft: '16px', justifyContent: 'center' }}>
         <p style={{ fontWeight: '800', color: 'var(--accent-gold)' }}>💡 Analisis Pembagian Tugas:</p>
         <p style={{ lineHeight: '1.5', fontWeight: '500' }}>
-          Pembagian tugas yang logis membuktikan kesiapan tim kerja Anda di mata juri. Pastikan tugas mingguan disinkronkan dengan baik agar jadwal sekolah anggota tim tetap berjalan lancar.
+          Pembagian tugas yang logis membuktikan kesiapan tim kerja kamu di mata model AI. Pastikan tugas mingguan disinkronkan dengan baik agar jadwal sekolah anggota tim tetap berjalan lancar.
         </p>
       </div>
 
@@ -91,10 +91,10 @@ export default function GanttChartGenerator({ initialData, reviewData }) {
       {reviewData && (
         <div className="glass-panel" style={{ padding: '20px', background: 'linear-gradient(to right, rgba(245, 158, 11, 0.03), #ffffff)', borderLeft: '5px solid var(--accent-gold)', borderRadius: '12px', marginTop: '10px' }}>
           <h4 style={{ fontSize: '0.9rem', fontWeight: '800', color: 'var(--accent-gold)', display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-            📋 Rekomendasi Juri: Rencana Operasional & Tim
+            📋 Rekomendasi Model AI: Rencana Operasional & Tim
           </h4>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.8rem' }}>
-            <p><b>🔍 Keadaan di Proposal Anda (Realita):</b><br />
+            <p><b>🔍 Keadaan di Proposal kamu (Realita):</b><br />
               <span style={{ color: 'var(--text-secondary)' }}>{reviewData.realita}</span>
             </p>
             <p><b>💡 Kondisi Ideal Lomba:</b><br />

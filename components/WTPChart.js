@@ -171,7 +171,7 @@ export default function WTPChart({ initialData, reviewData }) {
         <div style={{ fontSize: '0.8rem', color: 'var(--text-primary)', display: 'flex', flexDirection: 'column', gap: '6px', borderLeft: '4px solid var(--accent-blue)', paddingLeft: '16px', justifyContent: 'center' }}>
           <p style={{ fontWeight: '800', color: 'var(--accent-blue)' }}>💡 Analisis Penetapan Harga:</p>
           <p style={{ lineHeight: '1.5', fontWeight: '500' }}>
-            Berdasarkan survei pasar yang terbaca, harga optimal produk Anda adalah <b>{formatRupiah(optimalTier.price)}</b>. Penentuan harga ini dinilai rasional di mata juri karena didasari kesediaan membayar (WTP) riil responden, bukan tebakan sepihak.
+            Berdasarkan survei pasar yang terbaca, harga optimal produkmu adalah <b>{formatRupiah(optimalTier.price)}</b>. Penentuan harga ini dinilai rasional oleh model AI karena didasari kesediaan membayar (WTP) riil responden, bukan tebakan sepihak.
           </p>
         </div>
       </div>
@@ -180,10 +180,10 @@ export default function WTPChart({ initialData, reviewData }) {
       {reviewData && (
         <div className="glass-panel" style={{ padding: '20px', background: 'linear-gradient(to right, rgba(99, 102, 241, 0.03), #ffffff)', borderLeft: '5px solid var(--accent-blue)', borderRadius: '12px', marginTop: '10px' }}>
           <h4 style={{ fontSize: '0.9rem', fontWeight: '800', color: 'var(--accent-blue)', display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-            📋 Rekomendasi Juri: Strategi Validasi Pasar
+            📋 Rekomendasi Model AI: Strategi Validasi Pasar
           </h4>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.8rem' }}>
-            <p><b>🔍 Keadaan di Proposal Anda (Realita):</b><br />
+            <p><b>🔍 Keadaan di Proposal kamu (Realita):</b><br />
               <span style={{ color: 'var(--text-secondary)' }}>{reviewData.realita}</span>
             </p>
             <p><b>💡 Kondisi Ideal Lomba:</b><br />

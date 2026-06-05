@@ -93,7 +93,7 @@ export default function Home() {
 
   const handleEvaluate = async () => {
     if (!pdfFile) {
-      alert('Silakan unggah file PDF proposal Anda terlebih dahulu.');
+      alert('Silakan unggah file PDF proposal kamu terlebih dahulu.');
       return;
     }
 
@@ -189,7 +189,7 @@ export default function Home() {
           </div>
           <div>
             <h1 style={{ fontSize: '1.35rem', fontWeight: '800', letterSpacing: '-0.5px', color: 'var(--text-primary)' }}>
-              {evaluation ? "FIKSI-Idea Reviewer" : <>FIKS-Idea <span className="gradient-text" style={{ fontSize: '0.9rem', verticalAlign: 'super', fontWeight: '800' }}>2026</span></>}
+              {evaluation ? "FIKSI IdeaHub 2026 2.0" : <>FIKSI IdeaHub <span className="gradient-text" style={{ fontSize: '0.9rem', verticalAlign: 'super', fontWeight: '800' }}>2026 2.0</span></>}
             </h1>
             <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontWeight: '600' }}>
               {evaluation ? "Hasil Analisis Proposal" : "🚀 AI Guided Proposal Coach"}
@@ -265,7 +265,7 @@ export default function Home() {
             💡 Panduan Sukses & Kriteria Penilaian FIKSI 2026
           </h3>
           <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '4px', lineHeight: '1.5' }}>
-            Ikuti petunjuk dan strategi rahasia berikut agar proposal wirausaha tim Anda mendapatkan penilaian tinggi dari juri nasional!
+            Ikuti petunjuk dan strategi rahasia berikut agar proposal wirausaha tim kamu mendapatkan penilaian tinggi dari model AI!
           </p>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px', marginTop: '16px' }}>
@@ -285,7 +285,7 @@ export default function Home() {
             {/* Column 2: Bobot Penilaian */}
             <div style={{ backgroundColor: 'white', padding: '16px', borderRadius: '12px', border: '1px solid var(--border-color)', boxShadow: '0 4px 10px rgba(0,0,0,0.01)' }}>
               <span style={{ fontSize: '0.8rem', fontWeight: '800', color: 'var(--accent-green)', display: 'block', marginBottom: '6px' }}>
-                📊 Bobot Penilaian Juri Nasional
+                📊 Bobot Penilaian Model AI
               </span>
               <ul style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', paddingLeft: '16px', lineHeight: '1.6' }}>
                 <li><b>Purwarupa MVP (30%)</b>: Desain UI/UX digital riil, flowchart navigasi sistem, dan link demo video.</li>
@@ -301,9 +301,9 @@ export default function Home() {
                 🌟 Trik Rahasia Menembus Final
               </span>
               <ul style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', paddingLeft: '16px', lineHeight: '1.6' }}>
-                <li><b>Jangan Klaim Rp0</b>: Menghitung biaya internet/laptop sebagai Rp0 karena milik pribadi adalah kesalahan juri. Juri menyukai transparansi finansial profesional.</li>
+                <li><b>Jangan Klaim Rp0</b>: Menghitung biaya internet/laptop sebagai Rp0 karena milik pribadi adalah kesalahan. Model AI menyukai transparansi finansial profesional.</li>
                 <li><b>Buktikan Kemitraan</b>: Selalu lampirkan screenshot chat dengan penyuplai bahan baku atau foto rapat bersama mitra lapangan sebagai bukti komitmen bisnis nyata.</li>
-                <li><b>Fokus SDGs</b>: Hubungkan bisnis Anda dengan minimal 1 dari 17 pilar SDGs PBB secara tertulis dan visual di halaman awal.</li>
+                <li><b>Fokus SDGs</b>: Hubungkan bisnismu dengan minimal 1 dari 17 pilar SDGs PBB secara tertulis dan visual di halaman awal.</li>
               </ul>
             </div>
 
@@ -530,8 +530,8 @@ export default function Home() {
                   Halo Calon Juara FIKSI 2026! 🚀
                 </h2>
                 <p style={{ fontSize: '0.85rem', color: 'var(--text-primary)', marginTop: '6px', lineHeight: '1.5', opacity: 0.85 }}>
-                  Selamat datang di <b>FIKS-Idea Reviewer</b>. Siap menyulap ide wirausaha hebatmu menjadi proposal matang siap juara tingkat nasional?
-                  Silakan unggah file PDF proposal tim Anda pada area di bawah untuk mendapatkan analisis bimbingan AI interaktif secara instan.
+                  Selamat datang di <b>FIKSI IdeaHub 2026 2.0</b>. Siap menyulap ide wirausaha hebatmu menjadi proposal matang siap juara tingkat nasional?
+                  Silakan unggah file PDF proposal tim kamu pada area di bawah untuk mendapatkan analisis bimbingan AI interaktif secara instan.
                 </p>
               </div>
             </div>
@@ -569,7 +569,7 @@ export default function Home() {
                 <div style={{ marginTop: '10px', padding: '14px 18px', backgroundColor: 'var(--accent-gold-glow)', border: '1px solid rgba(245, 158, 11, 0.2)', borderRadius: '12px', maxWidth: '550px', fontSize: '0.78rem', color: 'var(--text-primary)', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
                   <span style={{ fontSize: '1.1rem' }}>💡</span>
                   <p style={{ lineHeight: '1.5', textAlign: 'left', margin: 0 }}>
-                    <b>Mengapa memakan waktu?</b> Model AI mengevaluasi draf proposal Anda secara mendalam menggunakan peninjauan multi-aspek (MVP, Kelayakan Finansial, Validasi Pasar, Keselarasan SDGs). Proses berpikir AI memerlukan waktu beberapa saat demi memberikan feedback kritis dan nilai akurat.
+                    <b>Mengapa memakan waktu?</b> Model AI mengevaluasi draf proposal kamu secara mendalam menggunakan peninjauan multi-aspek (MVP, Kelayakan Finansial, Validasi Pasar, Keselarasan SDGs). Proses berpikir AI memerlukan waktu beberapa saat demi memberikan feedback kritis dan nilai akurat.
                   </p>
                 </div>
               </div>
@@ -631,7 +631,7 @@ export default function Home() {
                         Seret & lepas berkas PDF proposal di sini
                       </span>
                       <span style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', marginTop: '6px', display: 'block' }}>
-                        atau <span style={{ color: 'var(--accent-blue)', textDecoration: 'underline', fontWeight: 'bold' }}>klik untuk cari berkas</span> dari komputer Anda
+                        atau <span style={{ color: 'var(--accent-blue)', textDecoration: 'underline', fontWeight: 'bold' }}>klik untuk cari berkas</span> dari komputermu
                       </span>
                     </div>
                   </label>
@@ -841,7 +841,7 @@ export default function Home() {
                 }}>
                   <div>
                     <h3 style={{ fontSize: '0.85rem', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '8px', textTransform: 'uppercase', letterSpacing: '0.5px', fontWeight: '800', marginBottom: '6px' }}>
-                      📋 KRITERIA PENILAIAN JURI
+                      📋 KRITERIA PENILAIAN MODEL AI
                     </h3>
                     <p style={{ fontSize: '0.72rem', color: '#64748b', marginBottom: '20px' }}>
                       {activeStep.subtitle}
@@ -921,7 +921,7 @@ export default function Home() {
                     </div>
                   </div>
 
-                  {/* Langkah Perbaikan Juri */}
+                  {/* Langkah Perbaikan Model AI */}
                   <div style={{
                     padding: '16px 20px',
                     backgroundColor: '#f5f3ff',
@@ -930,7 +930,7 @@ export default function Home() {
                     marginTop: '8px'
                   }}>
                     <h4 style={{ fontSize: '0.85rem', color: '#7c3aed', display: 'flex', alignItems: 'center', gap: '6px', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                      🚀 LANGKAH PERBAIKAN JURI
+                      🚀 LANGKAH PERBAIKAN MODEL AI
                     </h4>
                     <p style={{ color: 'var(--text-primary)', fontSize: '0.8rem', marginTop: '8px', lineHeight: '1.6' }}>
                       {rekomendasi}
@@ -1112,7 +1112,7 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* 2. Keputusan Juri Card (Main Container Card) */}
+              {/* 2. Keputusan Model AI Card (Main Container Card) */}
               <div className="glass-panel" style={{
                 padding: '28px',
                 backgroundColor: '#ffffff',
@@ -1156,7 +1156,7 @@ export default function Home() {
 
                   {/* Status Texts */}
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                    <span style={{ fontSize: '0.68rem', textTransform: 'uppercase', color: statusColor, fontWeight: '800', letterSpacing: '0.5px' }}>Keputusan Juri</span>
+                    <span style={{ fontSize: '0.68rem', textTransform: 'uppercase', color: statusColor, fontWeight: '800', letterSpacing: '0.5px' }}>Keputusan Model AI</span>
                     <span style={{
                       color: statusColor,
                       fontSize: '1.25rem',
@@ -1372,8 +1372,8 @@ export default function Home() {
 
       {/* Page Footer */}
       <footer className="glass-panel" style={{ margin: '16px', padding: '16px', textAlign: 'center', fontSize: '0.75rem', color: 'var(--text-muted)', borderRadius: '12px' }}>
-        <p>FIKS-Idea Reviewer 2026 © Kategori Perencanaan Usaha - Rumpun Digital, Game, Media & Kewirausahaan Sosial</p>
-        <p style={{ marginTop: '4px' }}>Dibimbing secara bertahap oleh model AI untuk meloloskan proposal bisnis Anda ke tingkat nasional.</p>
+        <p>FIKSI IdeaHub 2026 2.0 © Kategori Perencanaan Usaha - Rumpun Digital, Game, Media & Kewirausahaan Sosial</p>
+        <p style={{ marginTop: '4px' }}>Dibimbing secara bertahap oleh model AI untuk meloloskan proposal bisnismu ke tingkat nasional.</p>
       </footer>
 
     </div>

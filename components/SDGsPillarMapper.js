@@ -24,13 +24,13 @@ export default function SDGsPillarMapper({ initialData }) {
       title: 'Economic Hijau (Green Economy)',
       description: 'Fokus pada pembangunan berkelanjutan, pengurangan emisi karbon, efisiensi sumber daya, dan keadilan sosial. Hal ini diwujudkan dengan metode daur ulang (upcycling), penggunaan energi terbarukan, atau meminimalkan limbah (zero waste).',
       evidence: 'Infografis siklus daur ulang material, perhitungan emisi yang ditekan, sertifikat bahan ramah lingkungan, logo SDGs terkait.',
-      juaraTips: 'Jelaskan secara terukur bagaimana bisnis Anda memanfaatkan limbah lokal (misal: cangkang udang, biji nangka) untuk diubah menjadi produk bernilai ekonomi tinggi.'
+      juaraTips: 'Jelaskan secara terukur bagaimana bisnis kamu memanfaatkan limbah lokal (misal: cangkang udang, biji nangka) untuk diubah menjadi produk bernilai ekonomi tinggi.'
     },
     kreatif: {
       title: 'Ekonomi Kreatif (Creative Economy)',
       description: 'Memanfaatkan kreativitas, keterampilan, dan bakat individu untuk menciptakan kesejahteraan dan lapangan pekerjaan. Sangat lekat dengan kearifan lokal, seni pertunjukan, game, musik, dan desain grafis.',
       evidence: 'Desain visual karakter, storyboard alur game/aplikasi, draf kemasan dengan ornamen budaya lokal, hak cipta desain.',
-      juaraTips: 'Integrasikan kearifan lokal daerah Anda (misal: daun sengkubak sebagai penyedap alami atau cerita rakyat setempat ke dalam game edukasi).'
+      juaraTips: 'Integrasikan kearifan lokal daerahmu (misal: daun sengkubak sebagai penyedap alami atau cerita rakyat setempat ke dalam game edukasi).'
     },
     digital: {
       title: 'Ekonomi Digital (Digital Economy)',
@@ -45,13 +45,13 @@ export default function SDGsPillarMapper({ initialData }) {
       id: 8, 
       title: 'Pekerjaan Layak & Pertumbuhan Ekonomi', 
       desc: 'Mendukung kewirausahaan dan kreativitas siswa untuk menciptakan lapangan kerja lokal bagi anak muda.',
-      action: 'Tulis di proposal bagaimana bisnis Anda dapat mempekerjakan masyarakat sekitar (misal: ibu-ibu rumah tangga untuk merajut kemasan).'
+      action: 'Tulis di proposal bagaimana bisnis kamu dapat mempekerjakan masyarakat sekitar (misal: ibu-ibu rumah tangga untuk merajut kemasan).'
     },
     { 
       id: 9, 
       title: 'Industri, Inovasi & Infrastruktur', 
       desc: 'Menciptakan teknologi baru atau solusi inovatif digital untuk memecahkan masalah infrastruktur lokal.',
-      action: 'Fokuskan pada inovasi teknologi perangkat lunak/keras yang belum pernah ada di daerah Anda.'
+      action: 'Fokuskan pada inovasi teknologi perangkat lunak/keras yang belum pernah ada di daerahmu.'
     },
     { 
       id: 12, 
@@ -63,7 +63,7 @@ export default function SDGsPillarMapper({ initialData }) {
       id: 13, 
       title: 'Penanganan Perubahan Iklim', 
       desc: 'Membantu menekan jejak karbon dengan mengurangi penggunaan plastik sekali pakai atau beralih ke digitalisasi dokumen.',
-      action: 'Hitung estimasi pengurangan plastik atau kertas dari penggunaan produk digital/layanan Anda.'
+      action: 'Hitung estimasi pengurangan plastik atau kertas dari penggunaan produk digital/layananmu.'
     },
     { 
       id: 15, 
@@ -80,7 +80,7 @@ export default function SDGsPillarMapper({ initialData }) {
           🌱 Pemetaan SDGs & 3 Pilar FIKSI 2026
         </h3>
         <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
-          Tunjukkan kontribusi nyata ide bisnis Anda terhadap tema besar pembangunan berkelanjutan dan pilar ekonomi nasional.
+          Tunjukkan kontribusi nyata ide bisnismu terhadap tema besar pembangunan berkelanjutan dan pilar ekonomi nasional.
         </p>
       </div>
 
@@ -168,7 +168,7 @@ export default function SDGsPillarMapper({ initialData }) {
 
       {/* SDGs click grid */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        <span style={{ fontSize: '0.8rem', fontWeight: 'bold', color: 'var(--text-primary)' }}>Pilih Goal SDGs yang Didukung Ide Bisnis Anda:</span>
+        <span style={{ fontSize: '0.8rem', fontWeight: 'bold', color: 'var(--text-primary)' }}>Pilih Goal SDGs yang Didukung Ide Bisnismu:</span>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '4px' }}>
           {sdgs.map(sdg => {
             const isSelected = selectedSDG?.id === sdg.id;
