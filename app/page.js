@@ -113,7 +113,7 @@ export default function Home() {
         setLoadingStatus('Mengirim teks proposal ke AI ...');
       } else if (currentProgress < 75) {
         currentProgress += 1.5;
-        setLoadingStatus('Model Gemma-4 sedang berpikir & menganalisis draf proposal Anda...');
+        setLoadingStatus('Model AI sedang menganalisis dan memberikan penilaian...');
       } else if (currentProgress < 90) {
         currentProgress += 1;
         setLoadingStatus('AI sedang mengevaluasi Purwarupa (MVP) & Uji Validasi Pasar...');
@@ -121,7 +121,7 @@ export default function Home() {
         currentProgress += 0.5;
         setLoadingStatus('Menghitung kelayakan finansial & memetakan pilar SDGs...');
       } else {
-        setLoadingStatus('Hampir selesai! Sedang memformat laporan penilaian juri...');
+        setLoadingStatus('Hampir selesai! Sedang memformat laporan penilaian model AI...');
       }
       setProgress(Math.min(currentProgress, 99));
     }, 450);
@@ -551,7 +551,7 @@ export default function Home() {
                     {loadingStatus}
                   </h3>
                   <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '20px' }}>
-                    Model: <span style={{ fontWeight: 'bold', color: 'var(--accent-blue)' }}>Gemma-4-31B-IT</span>
+                    Model: <span style={{ fontWeight: 'bold', color: 'var(--accent-blue)' }}>Model AI</span>
                   </p>
 
                   {/* Progress Bar */}
@@ -569,7 +569,7 @@ export default function Home() {
                 <div style={{ marginTop: '10px', padding: '14px 18px', backgroundColor: 'var(--accent-gold-glow)', border: '1px solid rgba(245, 158, 11, 0.2)', borderRadius: '12px', maxWidth: '550px', fontSize: '0.78rem', color: 'var(--text-primary)', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
                   <span style={{ fontSize: '1.1rem' }}>💡</span>
                   <p style={{ lineHeight: '1.5', textAlign: 'left', margin: 0 }}>
-                    <b>Mengapa memakan waktu?</b> Model AI <i>Gemma-4-31B-IT</i> mengevaluasi draf proposal Anda secara mendalam menggunakan peninjauan multi-aspek (MVP, Kelayakan Finansial, Validasi Pasar, Keselarasan SDGs). Proses berpikir AI memerlukan waktu beberapa saat demi memberikan feedback kritis dan nilai akurat layaknya juri nasional.
+                    <b>Mengapa memakan waktu?</b> Model AI mengevaluasi draf proposal Anda secara mendalam menggunakan peninjauan multi-aspek (MVP, Kelayakan Finansial, Validasi Pasar, Keselarasan SDGs). Proses berpikir AI memerlukan waktu beberapa saat demi memberikan feedback kritis dan nilai akurat.
                   </p>
                 </div>
               </div>
@@ -1373,7 +1373,7 @@ export default function Home() {
       {/* Page Footer */}
       <footer className="glass-panel" style={{ margin: '16px', padding: '16px', textAlign: 'center', fontSize: '0.75rem', color: 'var(--text-muted)', borderRadius: '12px' }}>
         <p>FIKS-Idea Reviewer 2026 © Kategori Perencanaan Usaha - Rumpun Digital, Game, Media & Kewirausahaan Sosial</p>
-        <p style={{ marginTop: '4px' }}>Dibimbing secara bertahap oleh AI Gemma untuk meloloskan proposal bisnis Anda ke tingkat nasional.</p>
+        <p style={{ marginTop: '4px' }}>Dibimbing secara bertahap oleh model AI untuk meloloskan proposal bisnis Anda ke tingkat nasional.</p>
       </footer>
 
     </div>
