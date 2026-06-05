@@ -204,28 +204,6 @@ export default function Home() {
                 <span>📄</span>
                 <span>{pdfFile ? pdfFile.name.toUpperCase() : "PROPOSAL.PDF"}</span>
               </div>
-              <button
-                onClick={() => {
-                  setEvaluation(null);
-                  setCurrentStep(1);
-                  setPdfFile(null);
-                }}
-                style={{
-                  padding: '8px 16px',
-                  borderRadius: '20px',
-                  backgroundColor: '#f3e8ff',
-                  border: 'none',
-                  color: '#7c3aed',
-                  fontSize: '0.75rem',
-                  fontWeight: '800',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s'
-                }}
-                onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#7c3aed'; e.currentTarget.style.color = 'white'; }}
-                onMouseLeave={e => { e.currentTarget.style.backgroundColor = '#f3e8ff'; e.currentTarget.style.color = '#7c3aed'; }}
-              >
-                ← Upload Baru
-              </button>
             </div>
           ) : (
             <>
@@ -921,7 +899,7 @@ export default function Home() {
                     </div>
                   </div>
 
-                  {/* Langkah Perbaikan Model AI */}
+                  {/* Langkah Perbaikan */}
                   <div style={{
                     padding: '16px 20px',
                     backgroundColor: '#f5f3ff',
@@ -930,7 +908,7 @@ export default function Home() {
                     marginTop: '8px'
                   }}>
                     <h4 style={{ fontSize: '0.85rem', color: '#7c3aed', display: 'flex', alignItems: 'center', gap: '6px', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                      🚀 LANGKAH PERBAIKAN MODEL AI
+                      🚀 LANGKAH PERBAIKAN
                     </h4>
                     <p style={{ color: 'var(--text-primary)', fontSize: '0.8rem', marginTop: '8px', lineHeight: '1.6' }}>
                       {rekomendasi}
