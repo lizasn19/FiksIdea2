@@ -96,6 +96,12 @@ export default function Home() {
       alert('Silakan unggah file PDF proposal kamu terlebih dahulu.');
       return;
     }
+    
+    // Check file size (Vercel serverless functions have a 4.5MB payload limit)
+    if (pdfFile.size > 4.5 * 1024 * 1024) {
+      alert('Ukuran file proposal terlalu besar (maksimal 4.5 MB). Silakan kompres file PDF kamu terlebih dahulu.');
+      return;
+    }
 
     setLoading(true);
     setEvaluation(null);
@@ -137,9 +143,18 @@ export default function Home() {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        const detailsStr = errorData.details ? `\nDetail: ${errorData.details}` : '';
-        throw new Error((errorData.error || 'Terjadi kesalahan sistem.') + detailsStr);
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+          const errorData = await response.json();
+          const detailsStr = errorData.details ? `\nDetail: ${errorData.details}` : '';
+          throw new Error((errorData.error || 'Terjadi kesalahan sistem.') + detailsStr);
+        } else {
+          const errorText = await response.text();
+          if (response.status === 413 || errorText.includes('Request Entity Too Large')) {
+            throw new Error('Ukuran file terlalu besar untuk diproses oleh server (Maksimal 4.5 MB). Silakan kompres PDF kamu.');
+          }
+          throw new Error(`Terjadi kesalahan server (${response.status}). Coba lagi nanti.`);
+        }
       }
 
       const result = await response.json();
@@ -557,7 +572,10 @@ export default function Home() {
                   <span style={{ fontSize: '0.9rem', fontWeight: '800', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <Upload size={20} color="var(--accent-blue)" /> Unggah Berkas Proposal Bisnis
                   </span>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 'bold', backgroundColor: 'var(--bg-tertiary)', padding: '4px 10px', borderRadius: '20px' }}>Format File Wajib: PDF (.pdf)</span>
+                  <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                    <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 'bold', backgroundColor: 'var(--bg-tertiary)', padding: '4px 10px', borderRadius: '20px' }}>Format: PDF (.pdf)</span>
+                    <span style={{ fontSize: '0.75rem', color: 'var(--accent-gold)', fontWeight: 'bold', backgroundColor: 'var(--accent-gold-glow)', padding: '4px 10px', borderRadius: '20px', border: '1px solid rgba(245, 158, 11, 0.3)' }}>Maksimal: 4.5 MB</span>
+                  </div>
                 </div>
 
                 {/* Drag and Drop Zone */}
@@ -610,6 +628,9 @@ export default function Home() {
                       </span>
                       <span style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', marginTop: '6px', display: 'block' }}>
                         atau <span style={{ color: 'var(--accent-blue)', textDecoration: 'underline', fontWeight: 'bold' }}>klik untuk cari berkas</span> dari komputermu
+                      </span>
+                      <span style={{ fontSize: '0.72rem', color: 'var(--accent-gold)', marginTop: '8px', display: 'block', fontWeight: '700' }}>
+                        ⚠️ Ukuran berkas tidak boleh lebih dari 4.5 MB
                       </span>
                     </div>
                   </label>
