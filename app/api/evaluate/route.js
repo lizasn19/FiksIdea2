@@ -248,7 +248,7 @@ export async function POST(req) {
       // Convert file into a Buffer and extract text using pdf-parse
       const arrayBuffer = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
-      
+
       const pdf = require('pdf-parse');
       const pdfData = await pdf(buffer);
       proposalText = pdfData.text;
@@ -273,8 +273,8 @@ export async function POST(req) {
     if (userApiKey) {
       const cleanKey = userApiKey.trim();
       if (!cleanKey.startsWith('AIzaSy') || cleanKey.length < 30) {
-        return new Response(JSON.stringify({ 
-          error: 'Format API Key Google Gemini tidak valid. Kunci harus diawali dengan "AIzaSy" dan biasanya berjumlah 39 karakter.' 
+        return new Response(JSON.stringify({
+          error: 'Format API Key Google Gemini tidak valid. Kunci harus diawali dengan "AIzaSy" dan biasanya berjumlah 39 karakter.'
         }), {
           status: 400,
           headers: { 'Content-Type': 'application/json' }
@@ -297,7 +297,7 @@ export async function POST(req) {
     // Call real Gemini API
     const ai = new GoogleGenerativeAI(apiKey);
     const model = ai.getGenerativeModel({
-      model: 'gemma-4-26b-it',
+      model: 'gemma-4-31b-it',
       systemInstruction: SYSTEM_INSTRUCTIONS
     });
 
@@ -349,16 +349,16 @@ Analisis proposal ini secara objektif dan detail. Kembalikan tanggapan hanya dal
 
   } catch (error) {
     console.error('Error in evaluate route:', error);
-    
+
     // Sanitize error message to ensure no API key info is leaked
     let safeMessage = error.message || 'Terjadi kesalahan internal.';
     if (safeMessage.includes('AIzaSy')) {
       safeMessage = 'Autentikasi gagal. Pastikan API Key Google Gemini yang kamu masukkan sudah benar.';
     }
-    
-    return new Response(JSON.stringify({ 
-      error: 'Gagal menganalisis proposal.', 
-      details: safeMessage 
+
+    return new Response(JSON.stringify({
+      error: 'Gagal menganalisis proposal.',
+      details: safeMessage
     }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }
@@ -369,7 +369,7 @@ Analisis proposal ini secara objektif dan detail. Kembalikan tanggapan hanya dal
 // Function to generate high-quality mock evaluation responses if API key is not supplied
 function generateMockAnalysis(text) {
   const lowercase = text.toLowerCase();
-  
+
   // Custom mock values based on templates or keywords in the text
   let isRiceDetector = lowercase.includes('gabah') || lowercase.includes('padi') || lowercase.includes('rice') || lowercase.includes('sensor');
   let isUpcycle = lowercase.includes('cangkang') || lowercase.includes('udang') || lowercase.includes('limbah') || lowercase.includes('upcycle') || lowercase.includes('plastik');
@@ -399,11 +399,11 @@ function generateMockAnalysis(text) {
     mvp: {
       score: score > 80 ? 25 : 10,
       status: score > 80 ? "BAGUS" : "KURANG",
-      realita: isRiceDetector 
-        ? "Sudah melampirkan screenshot desain sirkuit sensor dan mockup antarmuka web monitoring." 
-        : isGame 
-        ? "Hanya menampilkan gambar coretan karakter di kertas buram dan logo rancangan game tanpa alur."
-        : "Menjelaskan konsep ide digital secara tekstual, namun visualisasi purwarupa atau screenshoot sistem belum terlampir secara rapi.",
+      realita: isRiceDetector
+        ? "Sudah melampirkan screenshot desain sirkuit sensor dan mockup antarmuka web monitoring."
+        : isGame
+          ? "Hanya menampilkan gambar coretan karakter di kertas buram dan logo rancangan game tanpa alur."
+          : "Menjelaskan konsep ide digital secara tekstual, namun visualisasi purwarupa atau screenshoot sistem belum terlampir secara rapi.",
       ideal: "Menampilkan desain antarmuka (UI/UX Mockup) yang rapi, modern, konsisten dalam warna/tipografi, fungsional, dilengkapi bagan alir (flowchart) navigasi pengguna serta video rekaman layar (screencast) demonstrasi berdurasi 1-2 menit di GDrive.",
       checklist: isRiceDetector ? [true, true, true, false, false] : isGame ? [true, false, false, false, false] : [true, true, false, false, false],
       bagus: [
@@ -488,11 +488,11 @@ function generateMockAnalysis(text) {
       rekomendasi: "Perkuat rencana implementasi: (1) Buat Gantt Chart per minggu dengan sub-task dan deliverable spesifik. (2) Rancang konten kalender media sosial untuk 3 bulan pertama beserta target engagement-nya. (3) Identifikasi dan hubungi minimal 2 calon mitra/kolaborator eksternal. (4) Tentukan KPI SMART (Specific, Measurable, Achievable, Relevant, Time-bound) per bulan."
     },
     sustainability: {
-      pillarMatch: isUpcycle 
+      pillarMatch: isUpcycle
         ? "Sangat kuat di pilar Ekonomi Hijau (upcycling limbah cangkang udang) dan Ekonomi Digital (sistem e-commerce pasokan)."
         : isRiceDetector
-        ? "Linear dengan pilar Ekonomi Digital (sensor IoT) dan Ekonomi Hijau (mengurangi gagal panen padi sehingga menekan food waste)."
-        : "Cocok dengan Ekonomi Kreatif (game budaya) dan Ekonomi Digital, namun kontribusi terhadap Ekonomi Hijau (keberlanjutan lingkungan) masih lemah.",
+          ? "Linear dengan pilar Ekonomi Digital (sensor IoT) dan Ekonomi Hijau (mengurangi gagal panen padi sehingga menekan food waste)."
+          : "Cocok dengan Ekonomi Kreatif (game budaya) dan Ekonomi Digital, namun kontribusi terhadap Ekonomi Hijau (keberlanjutan lingkungan) masih lemah.",
       sdgAdvice: isUpcycle
         ? "Mendukung penuh SDG 12 (Konsumsi & Produksi Bertanggung Jawab) dan SDG 14 (Menjaga Ekosistem Laut dengan mengurangi sampah cangkang). Tonjolkan logo SDGs ini di halaman awal proposal."
         : "Sesuai dengan SDG 9 (Inovasi Industri) dan SDG 2 (Tanpa Kelaparan / Ketahanan Pangan). Sebutkan secara tertulis kontribusi ini pada Bab Pendahuluan proposal.",
