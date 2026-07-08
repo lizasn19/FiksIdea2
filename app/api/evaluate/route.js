@@ -299,7 +299,7 @@ export async function POST(req) {
     const model = ai.getGenerativeModel({
       model: 'gemma-4-26b',
       systemInstruction: SYSTEM_INSTRUCTIONS
-    });
+    }, { apiVersion: 'v1alpha' });
 
     const prompt = `Berikut adalah proposal bisnis dari siswa:
 ----------------------------------------
