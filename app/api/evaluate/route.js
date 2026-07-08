@@ -297,9 +297,9 @@ export async function POST(req) {
     // Call real Gemini API
     const ai = new GoogleGenerativeAI(apiKey);
     const model = ai.getGenerativeModel({
-      model: 'gemma-4-26b',
+      model: 'gemma-4-26b-it',
       systemInstruction: SYSTEM_INSTRUCTIONS
-    }, { apiVersion: 'v1alpha' });
+    });
 
     const prompt = `Berikut adalah proposal bisnis dari siswa:
 ----------------------------------------
@@ -307,12 +307,30 @@ ${proposalText}
 ----------------------------------------
 Analisis proposal ini secara objektif dan detail. Kembalikan tanggapan hanya dalam format JSON sesuai skema.`;
 
-    const result = await model.generateContent({
-      contents: [{ role: 'user', parts: [{ text: prompt }] }],
-      generationConfig: {
-        responseMimeType: 'application/json'
+    let result;
+    try {
+      result = await model.generateContent({
+        contents: [{ role: 'user', parts: [{ text: prompt }] }],
+        generationConfig: {
+          responseMimeType: 'application/json'
+        }
+      });
+    } catch (err) {
+      if (err.message && err.message.includes('404')) {
+        let availableModels = '';
+        try {
+          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`);
+          const data = await res.json();
+          if (data.models) {
+            availableModels = data.models.filter(m => m.name.toLowerCase().includes('gemma') || m.name.toLowerCase().includes('gemini')).map(m => m.name).join(', ');
+          }
+        } catch (fetchErr) {
+          availableModels = 'Gagal mengambil daftar model.';
+        }
+        throw new Error(`Model tidak ditemukan. Model yang tersedia dengan API Key ini: ${availableModels}. Original Error: ${err.message}`);
       }
-    });
+      throw err;
+    }
 
     const responseText = result.response.text();
     let jsonResult;
