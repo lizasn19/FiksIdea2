@@ -297,7 +297,7 @@ export async function POST(req) {
     // Call real Gemini API
     const ai = new GoogleGenerativeAI(apiKey);
     const model = ai.getGenerativeModel({
-      model: 'gemini-1.5-pro',
+      model: 'gemma-4-26b',
       systemInstruction: SYSTEM_INSTRUCTIONS
     });
 
