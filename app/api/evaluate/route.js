@@ -90,8 +90,30 @@ Evaluasi dilakukan berdasarkan 4 Komponen Utama dengan kriteria sangat spesifik 
    - [I-03] Rencana Cadangan (Pivot & Mitigasi): Rencana cadangan (Rencana B) jika rencana utama gagal. Red Flag: Proposal seolah tanpa celah/risiko.
    - [I-04] Integrasi Dampak Ekonomi Hijau & Sosial: Keselarasan dengan tema besar FIKSI (Ekonomi Hijau/Green Economy, kearifan lokal, Ekonomi Kreatif/Digital) dan prinsip Triple Bottom Line (People, Planet, Profit). Red Flag: Berpotensi merusak lingkungan atau mengabaikan warga sekitar.
    - [I-05] Pemanfaatan Teknologi Digital: Akselerasi operasional menggunakan teknologi digital (otomasi spreadsheet/App Sheet, Google Form/Sheets otomatis) untuk menekan biaya admin. Red Flag: Operasional dikerjakan manual tanpa digitalisasi.
-   - Evaluasi kelima kriteria di atas untuk mengisi boolean array "checklist" secara berurutan:
-     [1. Gantt Chart detail per minggu, 2. Strategi pemasaran digital konkret, 3. Rencana kolaborasi mitra eksternal, 4. KPI dan target jelas per milestone, 5. Pembagian tugas tim spesifik & realistis]
+    - Evaluasi kelima kriteria di atas untuk mengisi boolean array "checklist" secara berurutan:
+      [1. Gantt Chart detail per minggu, 2. Strategi pemasaran digital konkret, 3. Rencana kolaborasi mitra eksternal, 4. KPI dan target jelas per milestone, 5. Pembagian tugas tim spesifik & realistis]
+
+PENTING - ATURAN AUDIT & REALITY CHECK TERBARU DARI REFERENSI TAHAP 2:
+Pastikan evaluasi kamu secara ketat mengecek poin-poin "Reality Check" dan kriteria spesifik berikut:
+1. Reality Check Harga & Data:
+   - Jika Harga Jual Usulan < HPP => Berikan peringatan RED FLAG (BOCOR!) di evaluasi finansial.
+   - Jika Harga Jual Usulan > Kesediaan Bayar Konsumen (WTP) => Berikan status WARNING.
+   - Jika Total Responden Survei/Wawancara < 30 => Berikan status WARNING (DATA KURANG). Responden idealnya 22-50 orang murni Early Adopter (Zero-Bias), bukan teman/keluarga.
+2. Purwarupa (MVP) Anti-Plagiat & Logis:
+   - Sangat disarankan ada foto asli tangan tim memegang produk/belepotan produksi (bukan comotan Google).
+   - Perlu adanya tabel Jembatan Fitur vs Rasa Sakit (Pain Points) dan penjelasan Manajemen Limbah (Zero Waste).
+   - Kapasitas produksi (Q_capacity) harus logis: Waktu Kerja Efektif sepulang sekolah dibagi Waktu Pembuatan per Unit.
+3. Trik Visualisasi Validasi Pasar (Evidence Integration):
+   - Saran konkret: Selipkan foto kecil bukti lapangan (sedang menyodorkan sampel/konsumen memegang HP) di sudut grafik pie-chart.
+   - Analisis kualitatif wawancara disarankan diubah menjadi 4 kuadran Empathy Map (Think, Feel, Say, Do).
+4. Pemahaman TAM, SAM, SOM yang Benar (Bukan sekadar jumlah orang, tapi dalam bentuk Rupiah):
+   - TAM = Total Populasi x Harga Jual
+   - SAM = Target segmen logis (misal siswa SMA se-kabupaten) x Harga Jual
+   - SOM = Target realistis tahun pertama x Harga Jual
+5. Finansial & Implementasi (Growth & Triple Bottom Line):
+   - Proyeksi target harus bertumbuh realistis: Bulan 1 (Uji/Skala kecil), Bulan 2 (Pre-Order), Bulan 3 (Titip Jual/Konsinyasi), Bulan 12 (Akselerasi Teknologi).
+   - HPP wajib memasukkan biaya operasional habis pakai. Margin kotor idealnya 40%-60%.
+   - Usaha harus menyoroti dampak Planet (kemasan ramah lingkungan/zero waste) dan People (memberdayakan warga lokal). Sangat disarankan ada "Golden Pitch" (kalimat penutup kuat).
 
 Format Skema Keluaran JSON:
 Harus berupa objek JSON yang valid dan bersih dengan skema di bawah ini. Harap diperhatikan bahwa rekomendasi dan saran harus menghindari kata "wajib" (ganti dengan "disarankan"), menggunakan panggilan "kamu" (hindari kata "Anda"), dan tidak menggunakan kata "juri" (gunakan "model AI").
